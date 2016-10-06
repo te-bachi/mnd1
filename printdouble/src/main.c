@@ -18,8 +18,10 @@ typedef union {
 
 double      create_double(uint8_t sign, int16_t exponent, uint64_t mantisse);
 uint64_t    parse(const char *str, format_t format);
-void        printdouble(double d);
+void        printdouble(char format, double d);
 double      calc_double(uint64_t hex);
+void        sum_double(double x, double y);
+void        sqrt_print(double x, double y);
 
 /**
  * Create a double with input values "sign", "exponent" and "mantisse".
@@ -102,13 +104,16 @@ parse(const char *str, format_t format)
  * @param   d           double value to print
  */
 void
-printdouble(double d)
+printdouble(char format, double d)
 {
+    char    fmt[16];
     uint8_t idx;
     uint8_t tmp;
     un_t    un;
     
     un.a = d;
+    sprintf(fmt, "%%60.49%c = ", format);
+    printf(fmt, un.a);
     for (idx = 0; idx < 64; idx++) {
         tmp = (un.b >> (63 - idx)) & 0x1;
         printf("%" PRIu8, tmp);
@@ -136,6 +141,45 @@ calc_double(uint64_t hex)
 }
 
 /**
+ * Sum and print two double values
+ *
+ * @param   x       first summand
+ * @param   x       second summand
+ */
+void
+sum_double(double x, double y)
+{
+    printf("%f + %f = %f\n",x, y, x + y);
+    printdouble('f', x);
+    printdouble('f', y);
+    printdouble('f', x + y);
+    printf("\n");
+}
+
+
+void
+sqrt_print(double x, double y)
+{
+    double x_sqrt       = sqrt(x);
+    double y_sqrt       = sqrt(y);
+    double difference   = x_sqrt - y_sqrt;
+    
+    printf("sqrt(%f) - sqrt(%f) = %f\n\n", x, y, difference);
+    
+    printf("x\n");
+    printdouble('f',x);
+    printf("\n");
+    
+    printf("y\n");
+    printdouble('f', y);
+    printf("\n");
+    
+    printf("difference\n");
+    printdouble('f', difference);
+    printf("\n");
+}
+
+/**
  * Main function
  */
 int
@@ -144,15 +188,6 @@ main(int argc, char *argv[])
     int i;
     un_t un;
     
-    /*
-    uint64_t input[5] = {
-        0x3ff0000000000000,
-        0x3fd0000000000000,
-        0xbfb9999999999999,
-        0x4090006666666666,
-        0xbffc5bf891b4ef6a
-    };
-    */
     char input[5][65] = {
         "0011111111110000000000000000000000000000000000000000000000000000",
         "0011111111010000000000000000000000000000000000000000000000000000",
@@ -161,79 +196,79 @@ main(int argc, char *argv[])
         "1011111111111100010110111111100010010001101101001110111101101010"
     };
     
-    /*   1.0000 = 0 0111111 11110000 00000000 00000000 00000000 00000000 00000000 00000000 */
-    un.a = 1.0;
-    printf("%60.49f = ", un.a);
-    printdouble(un.a);
-    
-    /*  -1.0000 = 1 0111111 11110000 00000000 00000000 00000000 00000000 00000000 00000000 */
-    un.a = -1.0;
-    printf("%60.49f = ", un.a);
-    printdouble(un.a);
-    
-    /*   1.1000 = 0 0111111 11110001 10011001 10011001 10011001 10011001 10011001 10011010 */
-    un.a = 1.1;
-    printf("%60.49f = ", un.a);
-    printdouble(un.a);
-    
-    /*   0.1000 = 0 0111111 10111001 10011001 10011001 10011001 10011001 10011001 10011010 */
-    un.a = 0.1;
-    printf("%60.49f = ", un.a);
-    printdouble(un.a);
-    
-    printf("\n\n*******************\n\n");
+    printf("\n\n*******************\n");
+    printf("Aufgabe 1.3\n\n");
     
     for (i = 0; i < (sizeof(input)/sizeof(input[0])); i++) {
-        //un.a = calc_double(input[i]);
         un.b = parse(input[i], FORMAT_BINARY);
-        printf("%60.49f = ", un.a);
-        printdouble(un.a);
+        printdouble('f', un.a);
     }
+    
+    printf("\n\n*******************\n");
+    printf("Aufgabe 1.4\n\n");
+    
+    sum_double(0.1, 0.15);
+    sum_double(1.0, 2.0);
+    sum_double(M_PI, M_E);
+    
+    
+    printf("\n\n*******************\n");
+    printf("Aufgabe 1.5\n\n");
+    
+    /*   0.1000 = 0 0111111 10111001 10011001 10011001 10011001 10011001 10011001 10011010 */
+    
+    printf("0.1\n");
+    un.a = 0.1;
+    printdouble('f', un.a);
+    printf("\n");
+    
+    printf("0.1 + epsilon\n");
+    un.b = parse("0011111110111001100110011001100110011001100110011001100110011011", FORMAT_BINARY);
+    printdouble('f', un.a);
+    printf("\n");
+    
+    printf("0.1 - epsilon\n");
+    un.b = parse("0011111110111001100110011001100110011001100110011001100110011001", FORMAT_BINARY);
+    printdouble('f', un.a);
+    printf("\n");
+    
+    printf("\n\n*******************\n");
+    printf("Aufgabe 1.6\n\n");
+    sqrt_print(1234567891.0, 1234567890.0);
     
     printf("\n\n*******************\n\n");
     un.b = parse("0011111110111001100110011001100110011001100110011001100110011010", FORMAT_BINARY);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, -1022, 1);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 1023, 1);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 0, 1);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 1, 1);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 2, 1);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, -1, 1);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 0, 2);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 0, 4);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 0, 6);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     un.a = create_double(0, 1, 6);
-    printf("%60.49e = ", un.a);
-    printdouble(un.a);
+    printdouble('e', un.a);
     
     return 0;
 }
