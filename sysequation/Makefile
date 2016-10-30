@@ -1,5 +1,5 @@
 LIBRARIES_STATIC            = 
-PROGRAMS                    = backward gauss
+PROGRAMS                    = backward gauss lu
 
 GLOBAL_CFLAGS               = -O0 -pthread -pipe -Wall -ggdb -std=gnu99 -fms-extensions -Iinclude -Wmissing-prototypes -Wno-uninitialized -Wstrict-prototypes
 GLOBAL_LDFLAGS              = -lm
@@ -33,5 +33,13 @@ gauss_LIBRARIES          =
 gauss_SOURCE             = gauss.c \
                            print.c \
                            backward.c
+                           
+### LU ########################################################################
+
+lu_CFLAGS                = -D__LU_MAIN__
+lu_LDFLAGS               = 
+lu_LIBRARIES             = 
+lu_SOURCE                = lu.c \
+                           print.c
 
 include autogen.mk

@@ -22,6 +22,7 @@ gauss(int n, double A[n][n], double b[n])
         if (A[j][j] != 0) {
             for (i = j + 1; i < n; i++) {
                 l = A[i][j] / A[j][j];
+                printf("l[%d] = %5.2f\n", i, l);
                 for (k = j; k < n; k++) {
                     A[i][k] = A[i][k] - (l * A[j][k]);
                 }
@@ -29,7 +30,7 @@ gauss(int n, double A[n][n], double b[n])
             }
         }
         
-        printmat(n, A, b);
+        printmat_ab(n, A, b);
     }
 }
 
@@ -62,7 +63,7 @@ main(int argc, const char *argv[])
         0
     };
     
-    printmat(N, A, b);
+    printmat_ab(N, A, b);
     gauss(N, A, b);
     backward(N, A, b, x);
     printvec(N, x);

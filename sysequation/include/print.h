@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 void printvec(const int n, double x[n]);
-void printmat(const int n, double A[n][n], double *b);
+void printmat(const int n, double A[n][n]);
+void printmat_ab(const int n, double A[n][n], double b[n]);
 
 #endif

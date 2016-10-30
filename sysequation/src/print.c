@@ -12,7 +12,22 @@ printvec(const int n, double x[n])
 }
 
 void
-printmat(const int n, double A[n][n], double *b)
+printmat(const int n, double A[n][n])
+{
+    int i;
+    int j;
+    
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf("%6.2f\t", A[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void
+printmat_ab(const int n, double A[n][n], double *b)
 {
     int i;
     int j;
