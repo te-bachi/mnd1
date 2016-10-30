@@ -22,6 +22,9 @@ void        printdouble(char format, double d);
 double      calc_double(uint64_t hex);
 void        sum_double(double x, double y);
 void        sqrt_print(double x, double y);
+double      calc_relative_rounding_error(double input);
+void        calc_exponential_effacement(void);
+void        calc_exponential_non_effacement(void);
 
 /**
  * Create a double with input values "sign", "exponent" and "mantisse".
@@ -166,6 +169,7 @@ sqrt_print(double x, double y)
     
     printf("sqrt(%f) - sqrt(%f) = %f\n\n", x, y, difference);
     
+    /* print x, y */
     printf("x\n");
     printdouble('f',x);
     printf("\n");
@@ -174,9 +178,99 @@ sqrt_print(double x, double y)
     printdouble('f', y);
     printf("\n");
     
-    printf("difference\n");
+    /* print sqrt(x), sqrt(y) */
+    printf("sqrt(x)\n");
+    printdouble('f', sqrt(x));
+    printf("\n");
+    
+    printf("sqrt(y)\n");
+    printdouble('f', sqrt(y));
+    printf("\n");
+    
+    /* print difference */
+    printf("sqrt(x) - sqrt(y)\n");
     printdouble('f', difference);
     printf("\n");
+}
+
+double
+calc_relative_rounding_error(double input)
+{
+    double rel_eps = input;
+    
+    do {
+        rel_eps /= 2.0;
+    } while ((input + (rel_eps / 2.0)) != input);
+    return rel_eps;
+}
+
+void
+calc_exponential_effacement(void)
+{
+    
+    double x;
+    double y;
+    double t;
+    double k;
+    
+    printf("%-3s\t%-32s\t%-32s\t%-25s\n" ,"x" , "y", "exp(x)", "y / exp(x) - 1");
+    
+    //for (x = 24.0; x >= -25.0; x--) {
+    x = -25.0;
+    
+        y = 1.0;
+        t = 1.0;
+        k = 1.0;
+        
+        printf("\t%-32s\t%-32s\t%-32s\n" ,"t" , "y", "k");
+        printf("\t%32.19f\t%32.19f\t%32.19f\n" ,t, y, k);
+        
+        while (y != (y + ((t * x) / k))) {
+            t /= k;
+            t *= x;
+            y += t;
+            printf("\t%37.24f\t%32.19f\t%32.19f\n" ,t, y, k);
+            k += 1;
+        }
+        printf("%-3s\t%-32s\t%-32s\t%-25s\n" ,"x" , "y", "exp(x)", "y / exp(x) - 1");
+        printf("%3.0f\t%32.19f\t%32.19f\t%25.19f\n" ,x , y, exp(x), y / exp(x) - 1.0);
+        printf("=================================\n");
+    //}
+    
+    double k_fak = 1.0;
+    double x_exp = 1.0;
+    
+    /*
+    y = 1.0;
+    t = 1.0;
+    k = 1.0;
+    while (y != (y + ((t * x) / k))) {
+        t /= k;
+        t *= x;
+        k_fak = 1.0;
+        x_exp = 1.0;
+        for (double i = 1.0; i <= k; i++) {
+            k_fak *= i;
+            x_exp *= x;
+            //printf("%32.19f\t%32.19f\t%32.19f\n", k_fak, x_exp, x_exp / k_fak);
+        }
+        y += x_exp / k_fak;
+        printf("%32.19f\t%32.19f\n", x_exp / k_fak, y);
+        k += 1;
+    }
+    printf("k!  = %e\n", k_fak);
+    printf("x^k = %e\n", x_exp);
+    printf("a   = %32.19f\n", x_exp / k_fak);
+    
+    printf("%3.0f\t%32.19f\t%32.19f\t%25.19f\n" ,x , y, exp(x), y / exp(x) - 1.0);
+    */
+    return 0.0;
+}
+
+void
+calc_exponential_non_effacement(void)
+{
+    
 }
 
 /**
@@ -215,6 +309,13 @@ main(int argc, char *argv[])
     printf("\n\n*******************\n");
     printf("Aufgabe 1.5\n\n");
     
+    //print_epsilon(1.0);
+    //print_epsilon(0.1);
+    //print_epsilon(0.001);
+    printdouble('f', calc_relative_rounding_error(1000.0));
+    printdouble('f', calc_relative_rounding_error(1.0));
+    printdouble('f', calc_relative_rounding_error(0.001));
+    
     /*   0.1000 = 0 0111111 10111001 10011001 10011001 10011001 10011001 10011001 10011010 */
     
     printf("0.1\n");
@@ -237,6 +338,8 @@ main(int argc, char *argv[])
     sqrt_print(1234567891.0, 1234567890.0);
     
     printf("\n\n*******************\n\n");
+    
+    /*
     un.b = parse("0011111110111001100110011001100110011001100110011001100110011010", FORMAT_BINARY);
     printdouble('e', un.a);
     
@@ -258,7 +361,7 @@ main(int argc, char *argv[])
     un.a = create_double(0, -1, 1);
     printdouble('e', un.a);
     
-    un.a = create_double(0, 0, 2);
+    un.a = create_double(0, 1, 2);
     printdouble('e', un.a);
     
     un.a = create_double(0, 0, 4);
@@ -269,6 +372,70 @@ main(int argc, char *argv[])
     
     un.a = create_double(0, 1, 6);
     printdouble('e', un.a);
+    
+    un.a = create_double(0, 1, 6);
+    printdouble('e', un.a);
+    */
+    
+    
+    un.a = create_double(0, 0, 1);
+    printdouble('e', un.a);
+    un.a = create_double(0, 0, 2);
+    printdouble('e', un.a);
+    un.a = create_double(0, 0, 4);
+    printdouble('e', un.a);
+    un.a = create_double(0, 0, 8);
+    
+    un.a = create_double(0, 1, 1);
+    printdouble('e', un.a);
+    un.a = create_double(0, 1, 2);
+    printdouble('e', un.a);
+    un.a = create_double(0, 1, 4);
+    printdouble('e', un.a);
+    un.a = create_double(0, 1, 8);
+    printdouble('e', un.a);
+    
+    un.b = parse("0000000000000110011001100110011001100110011001100110", FORMAT_BINARY);
+    printf("mantisse = %" PRIu64 "\n", un.b);
+    
+    
+    un.a = 18.4;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 18.2;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 18.0;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 20.12345;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 19.12345;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 18.12345;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 7.12345;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 4.50;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    un.a = 4.55;
+    printf("test\n", un.a);
+    printdouble('e', un.a);
+    
+    calc_exponential_effacement();
     
     return 0;
 }
