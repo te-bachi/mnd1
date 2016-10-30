@@ -1,6 +1,6 @@
 #include "print.h"
 
-
+#define FORMAT  "%12.8f"
 void
 printvec(const int n, double x[n])
 {
@@ -12,18 +12,19 @@ printvec(const int n, double x[n])
 }
 
 void
-printmat(const int n, double A[n][n])
+printmat(const char *var, const int n, double A[n][n])
 {
     int i;
     int j;
     
+    printf("%s = [\n", var);
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
-            printf("%6.2f\t", A[i][j]);
+            printf(FORMAT"\t", A[i][j]);
         }
-        printf("\n");
+        printf(";\n");
     }
-    printf("\n");
+    printf("]\n");
 }
 
 void
@@ -34,9 +35,9 @@ printmat_ab(const int n, double A[n][n], double *b)
     
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
-            printf("%6.2f\t", A[i][j]);
+            printf(FORMAT "\t", A[i][j]);
         }
-        printf("\t%6.2f\n", b[i]);
+        printf("\t"FORMAT"\n", b[i]);
     }
     printf("\n");
 }
