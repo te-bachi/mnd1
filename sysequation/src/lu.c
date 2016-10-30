@@ -42,8 +42,10 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
     memcpy(U, A, n*n*sizeof(double));
     memset(P, 0, n*n*sizeof(double));
     
-#if PIVOT
     for (j = 0; j < n; j++) {
+        L[j][j] = 1;
+        
+#if PIVOT
         /* Spaltenmaximum */
         p = j;
         for (i = j + 1; i < n; i++) {
@@ -52,17 +54,11 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
             }
         }
         P[p][j] = 1;
-    }
-    printmat("P", n, P);
-#endif
-
-    for (j = 0; j < n; j++) {
-        L[j][j] = 1;
-
-#if !PIVOT
+        printmat("P", n, P);
+#else
         if (A[j][j] == 0) {
             printf("A[%d][%d] = 0, Exit!\n", j, j);
-        	exit(-1);
+            exit(-1);
         }
 #endif
         
@@ -95,13 +91,20 @@ lu_gauss(int n, double A[n][n], double L[n][n], double R[n][n], double b[n])
 int
 main(int argc, const char *argv[])
 {
-    ///*
+    
     double  A[N][N] = {
         {   1,   2,   3 },
         {   1,   1,   1 },
         {   3,   3,   1 }
     };
-    //*/
+    
+    /*
+    double  A[N][N] = {
+        {   1,   2,   3 },
+        {   1,   1,   1 },
+        {   3,   3,   1 }
+    };
+    */
     
     /*
     double A[N][N] = {
@@ -109,13 +112,13 @@ main(int argc, const char *argv[])
         {       1,  1 }
     };
     */
-
+    
     double b[N] = {
-		0,
-		0,
-		0
+        0,
+        0,
+        0
     };
-
+    
     double d[N];
     double L[N][N];
     double U[N][N];

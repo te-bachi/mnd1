@@ -30,7 +30,10 @@ gauss(int n, double A[n][n], double b[n])
             }
         }
         
-        printmat_ab(n, A, b);
+        printmat("A", n, A);
+        printvec("b", n, b);
+        
+        //printmat_ab(n, A, b);
     }
 }
 
@@ -66,7 +69,7 @@ main(int argc, const char *argv[])
     printmat_ab(N, A, b);
     gauss(N, A, b);
     backward(N, A, b, x);
-    printvec(N, x);
+    printvec("x", N, x);
     
     return 0;
 }
