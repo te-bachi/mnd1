@@ -5,7 +5,7 @@
 #include "print.h"
 
 void
-backward(int n, double A[n][n], double b[n], double x[n])
+backward(int n, double A[n][n], double x[n], double y[n])
 {
     double sum;
     int j;
@@ -13,7 +13,7 @@ backward(int n, double A[n][n], double b[n], double x[n])
     
     /* set last variable */
     /* dimension n=3, array index 0..2 */
-    x[n - 1] = b[n - 1] / A[n - 1][n - 1];
+    x[n - 1] = y[n - 1] / A[n - 1][n - 1];
         
     for (j = n - 2; j >= 0; j--) {
         sum = 0;
@@ -21,7 +21,7 @@ backward(int n, double A[n][n], double b[n], double x[n])
             sum += A[j][i] * x[i];
         }
         
-        x[j] = (b[j] - sum) / A[j][j];
+        x[j] = (y[j] - sum) / A[j][j];
     }
     
     

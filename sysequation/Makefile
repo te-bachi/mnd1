@@ -36,7 +36,7 @@ gauss_SOURCE             = gauss.c \
                            
 ### LU ########################################################################
 
-lu_CFLAGS                = -D__LU_MAIN__
+lu_CFLAGS                = -D__LU_MAIN__ -DSCALE=0 -DPIVOT=1
 lu_LDFLAGS               = 
 lu_LIBRARIES             = 
 lu_SOURCE                = lu.c \

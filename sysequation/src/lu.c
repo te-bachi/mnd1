@@ -4,34 +4,20 @@
 
 #include <string.h>
 #include <math.h>
+#include <stdlib.h>
 
 void
-lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
+scale(int n, double A[n][n], double b[n], double d[n])
 {
+#if SCALE == 1
     int i;
-    int j;
     int k;
-    int p;
-    double d[n];
-    
-    memset(d, 0, n*sizeof(double));
-    memset(L, 0, n*n*sizeof(double));
-    memcpy(U, A, n*n*sizeof(double));
-    memset(P, 0, n*n*sizeof(double));
-    
-    /* Permutation */
-    //for (i = 0; i < n; i++) {
-    //    P[i][i] = 1;
-    //}
-    //printmat("P", n, P);
-    
-    /* Skalierung */
-    ///*
+
     printf("=== SCALE =================\n");
     for (i = 0; i < n; i++) {
         d[i] = 0;
         for (k = 0; k < n; k++) {
-            d[i] += abs(A[i][k]);
+            d[i] += fabs(A[i][k]);
         }
         d[i] = 1.0 / d[i];
         for (k = 0; k < n; k++) {
@@ -39,23 +25,50 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
         }
     }
     printmat("A", n, A);
-    //*/
+#endif
+}
+
+void
+lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
+{
+    int i;
+    int j;
+    int k;
+#if PIVOT
+    int p;
+#endif
     
+    memset(L, 0, n*n*sizeof(double));
+    memcpy(U, A, n*n*sizeof(double));
+    memset(P, 0, n*n*sizeof(double));
+    
+#if PIVOT
     for (j = 0; j < n; j++) {
-        L[j][j] = 1;
         /* Spaltenmaximum */
-        p = j + 1;
+        p = j;
         for (i = j + 1; i < n; i++) {
-            if (abs(A[p][j]) < abs(A[i][j])) {
+            if (fabs(A[p][j]) < fabs(A[i][j])) {
                 p = i;
             }
         }
-        P[j][p] = 1;
-        printmat("P", n, P);
+        P[p][j] = 1;
+    }
+    printmat("P", n, P);
+#endif
+
+    for (j = 0; j < n; j++) {
+        L[j][j] = 1;
+
+#if !PIVOT
+        if (A[j][j] == 0) {
+            printf("A[%d][%d] = 0, Exit!\n", j, j);
+        	exit(-1);
+        }
+#endif
         
         /* LU */
         printf("=== %d ====================\n", j);
-        if (j < (n - 1) && A[j][j] != 0) {
+        if (j < (n - 1)) {
             for (i = j + 1; i < n; i++) {
                 L[i][j] = A[i][j] / A[j][j];
                 printf("l[%d] = %5.2f\n", i, L[i][j]);
@@ -96,12 +109,20 @@ main(int argc, const char *argv[])
         {       1,  1 }
     };
     */
-    
+
+    double b[N] = {
+		0,
+		0,
+		0
+    };
+
+    double d[N];
     double L[N][N];
     double U[N][N];
     double P[N][N];
     
     printmat("A", N, A);
+    scale(N, A, b, d);
     lu(N, A, L, U, P);
     
     return 0;
