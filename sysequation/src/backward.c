@@ -1,37 +1,15 @@
 
-
-//
-//  main.c
-//  Rueckwaertseinsetzen
-//
-//  Created by Simon Iwan Stingelin on 12/08/15.
-//  Copyright (c) 2015 ZHAW. All rights reserved.
-//
-
 #include <stdio.h>
 
-/*
+#include "backward.h"
+#include "print.h"
+
 void
-backward(int dim, )
+backward(int n, double A[n][n], double b[n], double x[n])
 {
-
-    
-};
-*/
-
-#ifdef __BACKWARD_MAIN__
-int main(int argc, const char * argv[]) {
-    int n = 3;  /* dimension */
+    double sum;
     int j;
     int i;
-    double A[3][3] = {
-        {  3, -1,  2 },
-        {  0,  1,  3 },
-        {  0,  0,  2 }
-    };
-    double b[3] = { 0, 1, 4 };
-    double x[3];
-    double sum;
     
     /* set last variable */
     /* dimension n=3, array index 0..2 */
@@ -46,10 +24,25 @@ int main(int argc, const char * argv[]) {
         x[j] = (b[j] - sum) / A[j][j];
     }
     
-    /* print x[j] */
-    for(j = 0; j < n; j++) {
-        printf("%f\n",x[j]);
-    }
+    
+};
+
+
+#ifdef __BACKWARD_MAIN__
+
+#define N 3
+
+int main(int argc, const char * argv[]) {
+    double A[N][N] = {
+        {  3, -1,  2 },
+        {  0,  1,  3 },
+        {  0,  0,  2 }
+    };
+    double b[N] = { 0, 1, 4 };
+    double x[N];
+    
+    backward(N, A, x, b);
+    printvec(N, x);
     
     return 0;
 }

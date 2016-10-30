@@ -13,6 +13,7 @@ main_CFLAGS              =
 main_LDFLAGS             = 
 main_LIBRARIES           = 
 main_SOURCE              = main.c \
+                           print.c \
                            backward.c \
                            gauss.c
 
@@ -21,13 +22,16 @@ main_SOURCE              = main.c \
 backward_CFLAGS          = -D__BACKWARD_MAIN__
 backward_LDFLAGS         = 
 backward_LIBRARIES       = 
-backward_SOURCE          = backward.c
+backward_SOURCE          = backward.c \
+                           print.c
 
 ### GAUSS #####################################################################
 
 gauss_CFLAGS             =  -D__GAUSS_MAIN__
 gauss_LDFLAGS            = 
 gauss_LIBRARIES          = 
-gauss_SOURCE             = gauss.c
+gauss_SOURCE             = gauss.c \
+                           print.c \
+                           backward.c
 
 include autogen.mk

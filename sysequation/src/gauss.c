@@ -4,50 +4,39 @@
 #include <string.h>
 #include <math.h>
 
-#define N 4
+#include "gauss.h"
+#include "backward.h"
+#include "print.h"
 
-
-void printmat(double A[N][N], double *b);
-void gauss(double A[N][N], double *b, double *x);
 
 void
-printmat(double A[N][N], double *b)
-{
-    int i;
-    int j;
-    
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            printf("%6.2f\t", A[i][j]);
-        }
-        printf("\t%6.2f\n", b[i]);
-    }
-    printf("\n");
-}
-
-void
-gauss(double A[N][N], double *b, double *x)
+gauss(int n, double A[n][n], double b[n])
 {
     int i;
     int j;
     int k;
     double l;
     
-    for (j = 0; j < (N - 1); j++) {
+    for (j = 0; j < (n - 1); j++) {
         printf("=== %d ====================\n", j);
         if (A[j][j] != 0) {
-            for (i = j + 1; i < N; i++) {
+            for (i = j + 1; i < n; i++) {
                 l = A[i][j] / A[j][j];
-                for (k = j; k < N; k++) {
+                for (k = j; k < n; k++) {
                     A[i][k] = A[i][k] - (l * A[j][k]);
                 }
                 b[i] = b[i] - (l * b[j]);
             }
         }
         
-        printmat(A, b);
+        printmat(n, A, b);
     }
 }
+
+
+#ifdef __GAUSS_MAIN__
+
+#define N 4
 
 int
 main(int argc, const char *argv[])
@@ -73,8 +62,11 @@ main(int argc, const char *argv[])
         0
     };
     
-    printmat(A, b);
-    gauss(A, b, x);
+    printmat(N, A, b);
+    gauss(N, A, b);
+    backward(N, A, b, x);
+    printvec(N, x);
     
     return 0;
 }
+#endif
