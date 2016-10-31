@@ -10,7 +10,7 @@ printvec(const char *var, const int n, double x[n])
     for(j = 0; j < n; j++) {
         printf("\t" FORMAT ";\n",x[j]);
     }
-    printf("]\n");
+    printf("];\n");
 }
 
 void
@@ -26,7 +26,7 @@ printmat(const char *var, const int n, double A[n][n])
         }
         printf(";\n");
     }
-    printf("]\n");
+    printf("];\n");
 }
 
 void

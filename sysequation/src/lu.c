@@ -66,10 +66,10 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
         printf("=== %d ====================\n", j);
         if (j < (n - 1)) {
             for (i = j + 1; i < n; i++) {
-                L[i][j] = A[i][j] / A[j][j];
+                L[i][j] = U[i][j] / U[j][j];
                 printf("l[%d] = %5.2f\n", i, L[i][j]);
                 for (k = j; k < n; k++) {
-                    U[i][k] = A[i][k] - (L[i][j] * A[j][k]);
+                    U[i][k] = U[i][k] - (L[i][j] * U[j][k]);
                 }
             }
         }
@@ -86,17 +86,25 @@ lu_gauss(int n, double A[n][n], double L[n][n], double R[n][n], double b[n])
 }
 
 #ifdef __LU_MAIN__
-#define N 3
+#define N 4
 
 int
 main(int argc, const char *argv[])
 {
+    double  A[N][N] = {
+        {   2,  -1,  -3,   3 },
+        {   4,   1,  -3,   1 },
+        {   6,   1,  -1,   6 },
+        {  -2,  -5,   4,   1 }
+    };
     
+    /*
     double  A[N][N] = {
         {   1,   2,   3 },
         {   1,   1,   1 },
         {   3,   3,   1 }
     };
+    */
     
     /*
     double  A[N][N] = {

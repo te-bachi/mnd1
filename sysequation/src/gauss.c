@@ -68,7 +68,7 @@ main(int argc, const char *argv[])
     
     printmat_ab(N, A, b);
     gauss(N, A, b);
-    backward(N, A, b, x);
+    backward(N, A, x, b);
     printvec("x", N, x);
     
     return 0;
