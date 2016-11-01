@@ -22,7 +22,7 @@ projekt1_SOURCE          = projekt1.c \
                            backward.c \
                            lu.c \
                            gauss.c \
-                           swap.c \
+                           swap.c
 
 ### FORWARD ###################################################################
 

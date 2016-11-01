@@ -25,10 +25,8 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
     }
     printmat("P", n, P);
     
-    for (j = 0; j < n; j++) {
-        L[j][j] = 1;
-        
 #if PIVOT
+    for (j = 0; j < n; j++) {
         /* Spaltenmaximum */
         p = j;
         for (i = j + 1; i < n; i++) {
@@ -39,10 +37,16 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
         printf("p = %d\n", p);
         if (p != j) {
             swap(n, P, j, p);
-            swap(n, A, j, p);
+            swap(n, U, j, p);
             printmat("P", n, P);
         }
-#else
+    }
+#endif
+
+    for (j = 0; j < n; j++) {
+        L[j][j] = 1;
+        
+#if !PIVOT
         if (A[j][j] == 0) {
             printf("A[%d][%d] = 0, Exit!\n", j, j);
             exit(-1);
