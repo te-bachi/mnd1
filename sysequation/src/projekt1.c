@@ -10,7 +10,6 @@
 int
 main(int argc, const char *argv[])
 {
-    /*
     double  A[N][N] = {
         {   2,  -1,  -3,   3 },
         {   4,   0,  -3,   1 },
@@ -24,7 +23,8 @@ main(int argc, const char *argv[])
         -16,
         -12
     };
-    */
+    
+    /*
     double  A[N][N] = {
         {   1,   0,   0,   0 },
         {   2,   1,   0,   0 },
@@ -38,7 +38,7 @@ main(int argc, const char *argv[])
           5,
           7
     };
-    
+    */
     
     double d[N];
     double y[N];

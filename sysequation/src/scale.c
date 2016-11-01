@@ -23,6 +23,7 @@ scale(int n, double A[n][n], double b[n], double d[n])
         for (k = 0; k < n; k++) {
             A[i][k] *= d[i];
         }
+        b[i] *= d[i];
     }
     printmat("A", n, A);
 #endif

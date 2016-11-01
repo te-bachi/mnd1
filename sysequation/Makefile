@@ -1,7 +1,7 @@
 LIBRARIES_STATIC            = 
 PROGRAMS                    = projekt1 forward backward gauss lu swap multiply
 
-GLOBAL_CFLAGS               = -DSCALE=0 -DPIVOT=1 \
+GLOBAL_CFLAGS               = -DSCALE=1 -DPIVOT=1 \
                               -O0 -pthread -pipe -Wall -ggdb -std=gnu99 \
                               -fms-extensions -Iinclude -Wmissing-prototypes \
                               -Wno-uninitialized -Wstrict-prototypes
