@@ -11,7 +11,7 @@ main(int argc, const char *argv[])
 {
     double  A[N][N] = {
         {   2,  -1,  -3,   3 },
-        {   4,   1,  -3,   1 },
+        {   4,   0,  -3,   1 },
         {   6,   1,  -1,   6 },
         {  -2,  -5,   4,   1 }
     };
@@ -23,20 +23,9 @@ main(int argc, const char *argv[])
         -12
     };
     
-    double y[N] = {
-        0,
-        0,
-        0,
-        0
-    };
-    
-    double x[N] = {
-        0,
-        0,
-        0,
-        0
-    };
-    
+    double d[N];
+    double y[N];
+    double x[N];
     double L[N][N];
     double U[N][N];
     double P[N][N];
@@ -44,8 +33,9 @@ main(int argc, const char *argv[])
     printmat("A", N, A);
     printvec("b", N, b);
     
+    scale(N, A, b, d);
     lu(N, A, L, U, P);
-    forward(N, L, y, b);
+    forward(N, L, y, P, b);
     backward(N, U, x, y);
     
     printvec("x", N, x);

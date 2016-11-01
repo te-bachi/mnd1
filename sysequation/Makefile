@@ -1,7 +1,10 @@
 LIBRARIES_STATIC            = 
-PROGRAMS                    = backward gauss lu projekt1
+PROGRAMS                    = projekt1 forward backward gauss lu swap
 
-GLOBAL_CFLAGS               = -O0 -pthread -pipe -Wall -ggdb -std=gnu99 -fms-extensions -Iinclude -Wmissing-prototypes -Wno-uninitialized -Wstrict-prototypes
+GLOBAL_CFLAGS               = -DSCALE=0 -DPIVOT=1 \
+                              -O0 -pthread -pipe -Wall -ggdb -std=gnu99 \
+                              -fms-extensions -Iinclude -Wmissing-prototypes \
+                              -Wno-uninitialized -Wstrict-prototypes
 GLOBAL_LDFLAGS              = -lm
 
 ### LIBRARIES #################################################################
@@ -9,15 +12,25 @@ GLOBAL_LDFLAGS              = -lm
 
 ### PROJEKT1 ##################################################################
 
-projekt1_CFLAGS          = -DSCALE=0 -DPIVOT=0
+projekt1_CFLAGS          = 
 projekt1_LDFLAGS         = 
 projekt1_LIBRARIES       = 
 projekt1_SOURCE          = projekt1.c \
                            print.c \
+                           scale.c \
                            forward.c \
                            backward.c \
                            lu.c \
-                           gauss.c
+                           gauss.c \
+                           swap.c \
+
+### FORWARD ###################################################################
+
+forward_CFLAGS           = -D__FORWARD_MAIN__
+forward_LDFLAGS          = 
+forward_LIBRARIES        = 
+forward_SOURCE           = forward.c \
+                           print.c
 
 ### BACKWARD ##################################################################
 
@@ -38,12 +51,22 @@ gauss_SOURCE             = gauss.c \
                            
 ### LU ########################################################################
 
-lu_CFLAGS                = -D__LU_MAIN__ -DSCALE=0 -DPIVOT=0
+lu_CFLAGS                = -D__LU_MAIN__
 lu_LDFLAGS               = 
 lu_LIBRARIES             = 
 lu_SOURCE                = lu.c \
+                           scale.c \
                            forward.c \
                            backward.c \
+                           print.c \
+                           swap.c
+                           
+### SWAP ######################################################################
+
+swap_CFLAGS              = -D__SWAP_MAIN__
+swap_LDFLAGS             = 
+swap_LIBRARIES           = 
+swap_SOURCE              = swap.c \
                            print.c
 
 include autogen.mk

@@ -1,32 +1,11 @@
 
 #include "lu.h"
+#include "swap.h"
 #include "print.h"
 
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-
-void
-scale(int n, double A[n][n], double b[n], double d[n])
-{
-#if SCALE == 1
-    int i;
-    int k;
-
-    printf("=== SCALE =================\n");
-    for (i = 0; i < n; i++) {
-        d[i] = 0;
-        for (k = 0; k < n; k++) {
-            d[i] += fabs(A[i][k]);
-        }
-        d[i] = 1.0 / d[i];
-        for (k = 0; k < n; k++) {
-            A[i][k] *= d[i];
-        }
-    }
-    printmat("A", n, A);
-#endif
-}
 
 void
 lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
@@ -41,6 +20,10 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
     memset(L, 0, n*n*sizeof(double));
     memcpy(U, A, n*n*sizeof(double));
     memset(P, 0, n*n*sizeof(double));
+    for (j = 0; j < n; j++) {
+        P[j][j] = 1;
+    }
+    printmat("P", n, P);
     
     for (j = 0; j < n; j++) {
         L[j][j] = 1;
@@ -53,8 +36,12 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
                 p = i;
             }
         }
-        P[p][j] = 1;
-        printmat("P", n, P);
+        printf("p = %d\n", p);
+        if (p != j) {
+            swap(n, P, j, p);
+            swap(n, A, j, p);
+            printmat("P", n, P);
+        }
 #else
         if (A[j][j] == 0) {
             printf("A[%d][%d] = 0, Exit!\n", j, j);
