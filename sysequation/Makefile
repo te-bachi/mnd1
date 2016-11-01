@@ -1,5 +1,5 @@
 LIBRARIES_STATIC            = 
-PROGRAMS                    = projekt1 forward backward gauss lu swap
+PROGRAMS                    = projekt1 forward backward gauss lu swap multiply
 
 GLOBAL_CFLAGS               = -DSCALE=0 -DPIVOT=1 \
                               -O0 -pthread -pipe -Wall -ggdb -std=gnu99 \
@@ -22,7 +22,8 @@ projekt1_SOURCE          = projekt1.c \
                            backward.c \
                            lu.c \
                            gauss.c \
-                           swap.c
+                           swap.c \
+                           multiply.c
 
 ### FORWARD ###################################################################
 
@@ -30,7 +31,8 @@ forward_CFLAGS           = -D__FORWARD_MAIN__
 forward_LDFLAGS          = 
 forward_LIBRARIES        = 
 forward_SOURCE           = forward.c \
-                           print.c
+                           print.c \
+                           multiply.c
 
 ### BACKWARD ##################################################################
 
@@ -48,7 +50,7 @@ gauss_LIBRARIES          =
 gauss_SOURCE             = gauss.c \
                            print.c \
                            backward.c
-                           
+
 ### LU ########################################################################
 
 lu_CFLAGS                = -D__LU_MAIN__
@@ -60,13 +62,21 @@ lu_SOURCE                = lu.c \
                            backward.c \
                            print.c \
                            swap.c
-                           
+
 ### SWAP ######################################################################
 
 swap_CFLAGS              = -D__SWAP_MAIN__
 swap_LDFLAGS             = 
 swap_LIBRARIES           = 
 swap_SOURCE              = swap.c \
+                           print.c
+
+### MULTIPLY ##################################################################
+
+multiply_CFLAGS          = -D__MULTIPLY_MAIN__
+multiply_LDFLAGS         = 
+multiply_LIBRARIES       = 
+multiply_SOURCE          = multiply.c \
                            print.c
 
 include autogen.mk

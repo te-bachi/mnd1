@@ -42,7 +42,7 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
         }
     }
 #endif
-
+    
     for (j = 0; j < n; j++) {
         L[j][j] = 1;
         

@@ -2,6 +2,7 @@
 #include "forward.h"
 #include "backward.h"
 #include "lu.h"
+#include "multiply.h"
 #include "print.h"
 
 #define N 4
@@ -51,9 +52,11 @@ main(int argc, const char *argv[])
     
     scale(N, A, b, d);
     lu(N, A, L, U, P);
-    forward(N, L, y, P, b);
+    multiply_mat_vec(N, P, b);
+    forward(N, L, y, b);
     backward(N, U, x, y);
     
+    printmat("P", N, P);
     printvec("x", N, x);
     
     return 0;

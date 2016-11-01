@@ -1,10 +1,11 @@
 
 #include "forward.h"
+#include "multiply.h"
 
 #include <string.h>
 
 void
-forward(int n, double L[n][n], double y[n], double P[n][n], double b[n])
+forward(int n, double L[n][n], double y[n], double b[n])
 {
     int i;
     int k;
@@ -13,7 +14,6 @@ forward(int n, double L[n][n], double y[n], double P[n][n], double b[n])
     memset(y, 0, n*sizeof(double));
     
     y[0] = b[0];
-    //printf("y[%d] = %f\n", 
     
     for (i = 1; i < n; i++) {
         sum = 0;
@@ -75,7 +75,8 @@ main(int argc, const char *argv[])
     printmat("A", N, A);
     printvec("b", N, b);
     
-    forward(N, A, y, P, b);
+    multiply_mat_vec(N, P, b);
+    forward(N, A, y, b);
     
     printvec("y", N, y);
     
