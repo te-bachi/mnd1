@@ -1,5 +1,5 @@
 LIBRARIES_STATIC            = 
-PROGRAMS                    = projekt1 forward backward gauss lu scale swap multiply
+PROGRAMS                    = projekt1 forward backward gauss lu scale swap matmath
 
 GLOBAL_CFLAGS               = -DSCALE=1 -DPIVOT=1 \
                               -O0 -pthread -pipe -Wall -ggdb -std=gnu99 \
@@ -23,7 +23,7 @@ projekt1_SOURCE          = projekt1.c \
                            lu.c \
                            gauss.c \
                            swap.c \
-                           multiply.c
+                           matmath.c
 
 ### FORWARD ###################################################################
 
@@ -32,7 +32,7 @@ forward_LDFLAGS          =
 forward_LIBRARIES        = 
 forward_SOURCE           = forward.c \
                            print.c \
-                           multiply.c
+                           matmath.c
 
 ### BACKWARD ##################################################################
 
@@ -81,10 +81,10 @@ swap_SOURCE              = swap.c \
 
 ### MULTIPLY ##################################################################
 
-multiply_CFLAGS          = -D__MULTIPLY_MAIN__
-multiply_LDFLAGS         = 
-multiply_LIBRARIES       = 
-multiply_SOURCE          = multiply.c \
+matmath_CFLAGS           = -D__MULTIPLY_MAIN__
+matmath_LDFLAGS          = 
+matmath_LIBRARIES        = 
+matmath_SOURCE           = matmath.c \
                            print.c
 
 include autogen.mk

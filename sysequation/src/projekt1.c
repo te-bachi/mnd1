@@ -2,7 +2,7 @@
 #include "forward.h"
 #include "backward.h"
 #include "lu.h"
-#include "multiply.h"
+#include "matmath.h"
 #include "scale.h"
 #include "print.h"
 
