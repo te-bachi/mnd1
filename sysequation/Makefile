@@ -1,5 +1,6 @@
 LIBRARIES_STATIC            = 
-PROGRAMS                    = projekt1 forward backward gauss lu scale swap matmath
+PROGRAMS                    = projekt1 forward backward gauss lu scale \
+                              swap matmath hilbert
 
 GLOBAL_CFLAGS               = -DSCALE=1 -DPIVOT=1 \
                               -O0 -pthread -pipe -Wall -ggdb -std=gnu99 \
@@ -87,12 +88,12 @@ matmath_LIBRARIES        =
 matmath_SOURCE           = matmath.c \
                            print.c
 
-### MATMATH ###################################################################
+### HILBERT ###################################################################
 
-matmath_CFLAGS           = -D__MULTIPLY_MAIN__
-matmath_LDFLAGS          = 
-matmath_LIBRARIES        = 
-matmath_SOURCE           = matmath.c \
+hilbert_CFLAGS           = -D__HILBERT_MAIN__
+hilbert_LDFLAGS          = 
+hilbert_LIBRARIES        = 
+hilbert_SOURCE           = hilbert.c \
                            print.c
 
 include autogen.mk

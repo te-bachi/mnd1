@@ -1,6 +1,5 @@
 
 #include "scale.h"
-#include "print.h"
 
 #include <string.h>
 #include <math.h>
@@ -35,6 +34,8 @@ scale(const int n, double A[n][n], double b[n], double d[n])
 }
 
 #ifdef __SCALE_MAIN__
+
+#include "print.h"
 
 #define N 4
 
