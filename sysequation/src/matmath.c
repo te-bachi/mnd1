@@ -83,7 +83,7 @@ multiply_mat_vec(const int n, const double A[n][n], double v[n])
     memcpy(v, T, n*sizeof(double));
 }
 
-#ifdef __MULTIPLY_MAIN__
+#ifdef __MATMATH_MAIN__
 
 #include "print.h"
 

@@ -81,6 +81,14 @@ swap_SOURCE              = swap.c \
 
 ### MATMATH ###################################################################
 
+matmath_CFLAGS           = -D__MATMATH_MAIN__
+matmath_LDFLAGS          = 
+matmath_LIBRARIES        = 
+matmath_SOURCE           = matmath.c \
+                           print.c
+
+### MATMATH ###################################################################
+
 matmath_CFLAGS           = -D__MULTIPLY_MAIN__
 matmath_LDFLAGS          = 
 matmath_LIBRARIES        = 
