@@ -3,6 +3,7 @@
 #include <inttypes.h>
 #include <string.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "gauss.h"
 #include "backward.h"
