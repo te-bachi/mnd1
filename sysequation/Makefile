@@ -94,6 +94,10 @@ hilbert_CFLAGS           = -D__HILBERT_MAIN__
 hilbert_LDFLAGS          = 
 hilbert_LIBRARIES        = 
 hilbert_SOURCE           = hilbert.c \
-                           print.c
+                           print.c \
+                           lu.c \
+                           matmath.c \
+                           scale.c \
+                           swap.c
 
 include autogen.mk

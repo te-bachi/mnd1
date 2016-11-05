@@ -51,7 +51,7 @@ main(int argc, const char *argv[])
     printmat("A", N, A);
     printvec("b", N, b);
     
-    scale(N, A, b, d);
+    scale_ab(N, A, b, d);
     lu(N, A, L, U, P);
     multiply_mat_vec(N, P, b);
     forward(N, L, b, y);

@@ -3,6 +3,37 @@
 #include <string.h>
 #include <stdlib.h>
 
+/**
+ * Erstelle eine Einheitsmatrix
+ *
+ * @param[in]       n       Dimension
+ * @param[out]      A       Matrix
+ */
+void
+eye(const int n, double A[n][n])
+{
+    int i;
+    int j;
+    
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            if (i == j) {
+                A[i][j] = 1.0;
+            } else {
+                A[i][j] = 0.0;
+            }
+        }
+    }
+}
+
+/**
+ * Addiere eine Matrix A mit einer Matrix B.
+ * Das Resultat wird in B gespeichert.
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       A       Matrix
+ * @param[in,out]   B       Matrix
+ */
 void
 add_mat_mat(const int n, const double A[n][n], double B[n][n])
 {
@@ -16,6 +47,14 @@ add_mat_mat(const int n, const double A[n][n], double B[n][n])
     }
 }
 
+/**
+ * Addiere ein Vektor u mit einem Vektor v.
+ * Das Resultat wird in v gespeichert.
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       u       Vektor
+ * @param[in,out]   v       Vektor
+ */
 void
 add_vec_vec(const int n, const double u[n], double v[n])
 {
@@ -23,6 +62,45 @@ add_vec_vec(const int n, const double u[n], double v[n])
     
     for (i = 0; i < n; i++) {
         v[i] += u[i];
+    }
+}
+
+/**
+ * Subtrahiere eine Matrix A von einer Matrix B.
+ * Das Resultat wird in B gespeichert.
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       A       Matrix
+ * @param[in,out]   B       Matrix
+ */
+void
+subtract_mat_mat(const int n, const double A[n][n], double B[n][n])
+{
+    int i;
+    int j;
+    
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            B[i][j] -= A[i][j];
+        }
+    }
+}
+
+/**
+ * Subtrahiere ein Vektor u von einem Vektor v.
+ * Das Resultat wird in v gespeichert.
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       u       Vektor
+ * @param[in,out]   v       Vektor
+ */
+void
+subtract_vec_vec(const int n, const double u[n], double v[n])
+{
+    int i;
+    
+    for (i = 0; i < n; i++) {
+        v[i] -= u[i];
     }
 }
 

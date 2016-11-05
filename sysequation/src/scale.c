@@ -6,8 +6,34 @@
 #include <stdlib.h>
 
 /**
- * Skaliert die Matrix A|b so, dass pro Zeile die Summe aller Spalten-Elemente
- * gleich 1 sein sollen.
+ * Skaliert die Matrix A so, dass pro Zeile die Summe
+ * aller Spalten-Elemente gleich 1 sein sollen.
+ *
+ * @param[in]       n       Dimension
+ * @param[in,out]   A       Koeffizienten-Matrix
+ */
+void
+scale(const int n, double A[n][n])
+{
+    int     i;
+    int     k;
+    double  d;
+    
+    for (i = 0; i < n; i++) {
+        d = 0.0;
+        for (k = 0; k < n; k++) {
+            d += fabs(A[i][k]);
+        }
+        d = 1.0 / d;
+        for (k = 0; k < n; k++) {
+            A[i][k] *= d;
+        }
+    }
+}
+
+/**
+ * Skaliert die Matrix A und den Vektor b so, dass pro Zeile die Summe
+ * aller Spalten-Elemente gleich 1 sein sollen.
  *
  * @param[in]       n       Dimension
  * @param[in,out]   A       Koeffizienten-Matrix
@@ -15,7 +41,7 @@
  * @param[out]      d       Skalierungs-Vektor
  */
 void
-scale(const int n, double A[n][n], double b[n], double d[n])
+scale_ab(const int n, double A[n][n], double b[n], double d[n])
 {
     int i;
     int k;
@@ -61,7 +87,7 @@ main(int argc, const char *argv[])
     printf("Vorher:\n");
     printmat_ab(N, A, b);
     
-    scale(N, A, b, d);
+    scale_ab(N, A, b, d);
     
     printf("==============\n");
     printvec("d", N, d);
