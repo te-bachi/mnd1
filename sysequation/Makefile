@@ -79,7 +79,7 @@ swap_LIBRARIES           =
 swap_SOURCE              = swap.c \
                            print.c
 
-### MULTIPLY ##################################################################
+### MATMATH ###################################################################
 
 matmath_CFLAGS           = -D__MULTIPLY_MAIN__
 matmath_LDFLAGS          = 
