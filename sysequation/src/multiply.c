@@ -3,8 +3,16 @@
 #include <string.h>
 #include <stdlib.h>
 
+/**
+ * Multipliziert eine Matrix A mit einer Matrix B.
+ * Das Resultat wird in B gespeichert.
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       A       Matrix
+ * @param[in,out]   B       Matrix
+ */
 void
-multiply_mat_mat(int n, double A[n][n], double B[n][n])
+multiply_mat_mat(const int n, const double A[n][n], double B[n][n])
 {
     int i;
     int j;
@@ -25,8 +33,16 @@ multiply_mat_mat(int n, double A[n][n], double B[n][n])
     memcpy(B, T, n*n*sizeof(double));
 }
 
+/**
+ * Multipliziert eine Matrix A mit einem Vektor v.
+ * Das Resultat wird in v gespeichert.
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       A       Matrix
+ * @param[in,out]   v       Vektor
+ */
 void
-multiply_mat_vec(int n, double A[n][n], double v[n])
+multiply_mat_vec(const int n, const double A[n][n], double v[n])
 {
     int i;
     int k;

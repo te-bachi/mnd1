@@ -1,12 +1,21 @@
 
 #include "swap.h"
 
+/**
+ * Tauscht zwei Zeilen einer Matrix A
+ *
+ * @param[in]       n       Dimension
+ * @param[in,out]   A       Koeffizienten-Matrix
+ * @param[in]       i       Erste Zeile
+ * @param[in]       p       Zweite Zeile
+ */
 void
-swap(int n, double A[n][n], int i, int p)
+swap(const int n, double A[n][n], const int i, const int p)
 {
     int     k;
     double  t;
     
+    /* Zeilen sind bekannt. Tausche nur Spalten. */
     for (k = 0; k < n; k++) {
         t       = A[i][k];
         A[i][k] = A[p][k];

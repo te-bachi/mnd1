@@ -1,6 +1,14 @@
 #include "print.h"
 
 #define FORMAT  "%12.8f"
+
+/**
+ * Gibt einen Vektor x aus.
+ *
+ * @param[in]       var     Variable als erster Teil, der ausgegeben wird
+ * @param[in]       n       Dimension
+ * @param[in]       x       Vektor als zweiter Teil, der ausgegeben wird
+ */
 void
 printvec(const char *var, const int n, double x[n])
 {
@@ -13,6 +21,13 @@ printvec(const char *var, const int n, double x[n])
     printf("];\n");
 }
 
+/**
+ * Gibt eine Matrix A aus.
+ *
+ * @param[in]       var     Variable als erster Teil, der ausgegeben wird
+ * @param[in]       n       Dimension
+ * @param[in]       A       Matrix als zweiter Teil, der ausgegeben wird
+ */
 void
 printmat(const char *var, const int n, double A[n][n])
 {
@@ -29,8 +44,15 @@ printmat(const char *var, const int n, double A[n][n])
     printf("];\n");
 }
 
+/**
+ * Gibt eine Matrix A|b aus.
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       A       Matrix
+ * @param[in]       b       Vektor
+ */
 void
-printmat_ab(const int n, double A[n][n], double *b)
+printmat_ab(const int n, double A[n][n], double b[n])
 {
     int i;
     int j;

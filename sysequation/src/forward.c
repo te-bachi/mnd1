@@ -4,22 +4,39 @@
 
 #include <string.h>
 
+/**
+ * Vorwärtseinsetzen: berechne die Lösung y von L * y = b
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       L       Untere Dreiecksmatrix
+ * @param[in]       b       Rechte Seite Vektor
+ * @param[out]      y       Lösungsvektor
+ */
 void
-forward(int n, double L[n][n], double y[n], double b[n])
+forward(const int n, const double L[n][n], const double b[n], double y[n])
 {
     int i;
-    int k;
+    int j;
     double sum;
     
-    memset(y, 0, n*sizeof(double));
-    
+    /* Setze erste Variable von der ersten Zeile einfach ein */
     y[0] = b[0];
     
+    /* Iteriere über alle Zeilen:
+     * - beginnend mit der zweiten Zeile
+     * - Löse Lösungsvektor nach y[i] auf */
     for (i = 1; i < n; i++) {
         sum = 0;
-        for (k = 0; k < i; k++) {
-            sum += (L[i][k] * y[k]);
+        
+        /* Iteriere über alle Spalten:
+         * Summiere alle Multiplikationen von
+         * Spalten-Elemente L[i][j] einer Zeile mit dem
+         * schon gelösen Lösungsvektor y[j] auf */
+        for (j = 0; j < i; j++) {
+            sum += (L[i][j] * y[j]);
         }
+        
+        /* Löse Lösungsvektor y[i] */
         y[i] = (b[i] - sum) / L[i][i];
     }
 }
@@ -76,7 +93,7 @@ main(int argc, const char *argv[])
     printvec("b", N, b);
     
     multiply_mat_vec(N, P, b);
-    forward(N, A, y, b);
+    forward(N, A, b, y);
     
     printvec("y", N, y);
     

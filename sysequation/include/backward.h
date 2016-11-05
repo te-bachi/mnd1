@@ -1,6 +1,6 @@
 #ifndef __BACKWARD_H__
 #define __BACKWARD_H__
 
-void backward(int n, double U[n][n], double x[n], double y[n]);
+void backward(const int n, const double U[n][n], const double y[n], double x[n]);
 
 #endif

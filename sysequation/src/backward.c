@@ -4,24 +4,40 @@
 #include "backward.h"
 #include "print.h"
 
+/**
+ * Rückwärtseinsetzen: berechne die Lösung x von R * x = y
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       U       Obere Dreiecksmatrix
+ * @param[in]       y       Rechte Seite Vektor
+ * @param[out]      x       Lösungsvektor
+ */
 void
-backward(int n, double U[n][n], double x[n], double y[n])
+backward(const int n, const double U[n][n], const double y[n], double x[n])
 {
     double sum;
-    int j;
     int i;
+    int j;
     
-    /* set last variable */
-    /* dimension n=3, array index 0..2 */
+    /* Setze letzte Variable von der letzten Zeile einfach ein */
     x[n - 1] = y[n - 1] / U[n - 1][n - 1];
-        
-    for (j = n - 2; j >= 0; j--) {
+    
+    /* Iteriere über alle Zeilen:
+     * - beginnend mit der vorletzten Zeile
+     * - Löse Lösungsvektor nach x[i] auf */
+    for (i = n - 2; i >= 0; i--) {
         sum = 0;
-        for (i = j + 1; i < n; i++) {
-            sum += U[j][i] * x[i];
+        
+        /* Iteriere über alle Spalten:
+         * Summiere alle Multiplikationen von
+         * Spalten-Elemente U[i][j] einer Zeile mit dem
+         * schon gelösen Lösungsvektor x[j] auf */
+        for (j = i + 1; j < n; j++) {
+            sum += U[i][j] * x[j];
         }
         
-        x[j] = (y[j] - sum) / U[j][j];
+        /* Löse Lösungsvektor x[i] */
+        x[i] = (y[i] - sum) / U[i][i];
     }
     
     
@@ -43,7 +59,7 @@ int main(int argc, const char * argv[]) {
     
     printmat("A", N, A);
     printvec("b", N, b);
-    backward(N, A, x, b);
+    backward(N, A, b, x);
     printvec("x", N, x);
     
     return 0;

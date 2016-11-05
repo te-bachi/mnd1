@@ -1,6 +1,6 @@
 #ifndef __FORWARD_H__
 #define __FORDWARD_H__
 
-void forward(int n, double L[n][n], double y[n], double b[n]);
+void forward(const int n, const double L[n][n], const double b[n], double y[n]);
 
 #endif

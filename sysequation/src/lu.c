@@ -1,14 +1,27 @@
 
 #include "lu.h"
 #include "swap.h"
+#include "scale.h"
 #include "print.h"
 
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
 
+/**
+ * Zerlegt eine Matrix A in eine untere Matrix L und
+ * eine obere Matrix U. Durch Spaltenpivotisierung
+ * können Zeilen in L und U vertauscht werden, sodass
+ * L * U = P * A
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       A       Matrix
+ * @param[out]      L       Untere (Lower) Dreiecksmatrix 
+ * @param[out]      U       Obere (Upper) Dreiecksmatrix
+ * @param[out]      P       Permutationsmatrix
+ */
 void
-lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
+lu(const int n, const double A[n][n], double L[n][n], double U[n][n], double P[n][n])
 {
     int i;
     int j;
@@ -23,7 +36,6 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
     for (j = 0; j < n; j++) {
         P[j][j] = 1;
     }
-    printmat("P", n, P);
     
 #if PIVOT
     for (j = 0; j < n; j++) {
@@ -34,11 +46,9 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
                 p = i;
             }
         }
-        printf("p = %d\n", p);
         if (p != j) {
             swap(n, P, j, p);
             swap(n, U, j, p);
-            printmat("P", n, P);
         }
     }
 #endif
@@ -54,26 +64,15 @@ lu(int n, double A[n][n], double L[n][n], double U[n][n], double P[n][n])
 #endif
         
         /* LU */
-        printf("=== %d ====================\n", j);
         if (j < (n - 1)) {
             for (i = j + 1; i < n; i++) {
                 L[i][j] = U[i][j] / U[j][j];
-                printf("l[%d] = %5.2f\n", i, L[i][j]);
                 for (k = j; k < n; k++) {
                     U[i][k] = U[i][k] - (L[i][j] * U[j][k]);
                 }
             }
         }
-        
-        printmat("L", n, L);
-        printmat("U", n, U);
     }
-}
-
-void
-lu_gauss(int n, double A[n][n], double L[n][n], double R[n][n], double b[n])
-{
-    
 }
 
 #ifdef __LU_MAIN__

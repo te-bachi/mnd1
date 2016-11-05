@@ -1,5 +1,5 @@
 LIBRARIES_STATIC            = 
-PROGRAMS                    = projekt1 forward backward gauss lu swap multiply
+PROGRAMS                    = projekt1 forward backward gauss lu scale swap multiply
 
 GLOBAL_CFLAGS               = -DSCALE=1 -DPIVOT=1 \
                               -O0 -pthread -pipe -Wall -ggdb -std=gnu99 \
@@ -62,6 +62,14 @@ lu_SOURCE                = lu.c \
                            backward.c \
                            print.c \
                            swap.c
+
+### SCALE #####################################################################
+
+scale_CFLAGS             = -D__SCALE_MAIN__
+scale_LDFLAGS            = 
+scale_LIBRARIES          = 
+scale_SOURCE             = scale.c \
+                           print.c
 
 ### SWAP ######################################################################
 
