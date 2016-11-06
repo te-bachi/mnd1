@@ -22,6 +22,30 @@ printvec(const char *var, const int n, double x[n])
 }
 
 /**
+ * Gibt r Vektor x aus.
+ *
+ * @param[in]       var     Variable als erster Teil, der ausgegeben wird
+ * @param[in]       n       Dimension
+ * @param[in]       r       Anzahl Vektoren
+ * @param[in]       x       Vektor als zweiter Teil, der ausgegeben wird
+ */
+void
+printvec_multi(const char *var, const int n, const int r, double x[r][n])
+{
+    int j;
+    int k;
+    
+    printf("%s = [\n", var);
+    for(j = 0; j < n; j++) {
+        for (k = 0; k < r; k++) {
+            printf("\t" FORMAT,x[k][j]);
+        }
+        printf(";\n");
+    }
+    printf("];\n");
+}
+
+/**
  * Gibt eine Matrix A aus.
  *
  * @param[in]       var     Variable als erster Teil, der ausgegeben wird

@@ -8,6 +8,7 @@
  * Vorwärtseinsetzen: berechne die Lösung y von L * y = b
  *
  * @param[in]       n       Dimension
+ * @param[in]       P       Permutationsmatrix
  * @param[in]       L       Untere Dreiecksmatrix
  * @param[in]       b       Rechte Seite Vektor
  * @param[out]      y       Lösungsvektor
@@ -46,11 +47,12 @@ forward(const int n, const double P[n][n], const double L[n][n], double b[n], do
 }
 
 /**
- * Vorwärtseinsetzen mit mehreren rechten Seiten:
- * berechne die Lösung y von L * y(n) = b(n)
+ * Vorwärtseinsetzen mit mehreren rechten Seiten
  *
  * @param[in]       n       Dimension
+ * @param[in]       P       Permutationsmatrix
  * @param[in]       L       Untere Dreiecksmatrix
+ * @param[in]       r       Anzahl Rechte Seiten
  * @param[in]       b       Rechte Seite Vektor
  * @param[out]      y       Lösungsvektor
  */

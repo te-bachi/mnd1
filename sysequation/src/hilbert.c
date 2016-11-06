@@ -35,6 +35,7 @@ hilbert(const int n, double A[n][n])
 int
 main(int argc, const char *argv[])
 {
+    double  d[N];
     double  A[N][N];
     double  L[N][N];
     double  U[N][N];
@@ -45,7 +46,7 @@ main(int argc, const char *argv[])
     
     hilbert(N, A);
     printmat("A", N, A);
-    scale(N, A);
+    scale(N, A, d);
     lu(N, A, L, U, P);
     
     memcpy(Lcopy, L, N*N*sizeof(double));

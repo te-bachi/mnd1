@@ -11,22 +11,22 @@
  *
  * @param[in]       n       Dimension
  * @param[in,out]   A       Koeffizienten-Matrix
+ * @param[out]      d       Skalierungs-Vektor
  */
 void
-scale(const int n, double A[n][n])
+scale(const int n, double A[n][n], double d[n])
 {
     int     i;
     int     k;
-    double  d;
     
     for (i = 0; i < n; i++) {
-        d = 0.0;
+        d[i] = 0.0;
         for (k = 0; k < n; k++) {
-            d += fabs(A[i][k]);
+            d[i] += fabs(A[i][k]);
         }
-        d = 1.0 / d;
+        d[i] = 1.0 / d[i];
         for (k = 0; k < n; k++) {
-            A[i][k] *= d;
+            A[i][k] *= d[i];
         }
     }
 }
@@ -41,22 +41,52 @@ scale(const int n, double A[n][n])
  * @param[out]      d       Skalierungs-Vektor
  */
 void
-scale_ab(const int n, double A[n][n], double b[n])
+scale_ab(const int n, double A[n][n], double b[n], double d[n])
 {
     int     i;
     int     k;
-    double  d;
     
     for (i = 0; i < n; i++) {
-        d = 0;
+        d[i] = 0;
         for (k = 0; k < n; k++) {
-            d += fabs(A[i][k]);
+            d[i] += fabs(A[i][k]);
         }
-        d = 1.0 / d;
+        d[i] = 1.0 / d[i];
         for (k = 0; k < n; k++) {
-            A[i][k] *= d;
+            A[i][k] *= d[i];
         }
-        b[i] *= d;
+        b[i] *= d[i];
+    }
+}
+
+/**
+ * Skaliert die Matrix A und r Vektoren b so, dass pro Zeile die Summe
+ * aller Spalten-Elemente gleich 1 sein sollen.
+ *
+ * @param[in]       n       Dimension
+ * @param[in,out]   A       Koeffizienten-Matrix
+ * @param[in]       r       Anzahl Rechte Seiten
+ * @param[in,out]   b       Rechte Seite Vektor
+ * @param[out]      d       Skalierungs-Vektor
+ */
+void
+scale_ab_multi(const int n, double A[n][n], const int r, double b[r][n], double d[n])
+{
+    int     i;
+    int     k;
+    
+    for (i = 0; i < n; i++) {
+        d[i] = 0;
+        for (k = 0; k < n; k++) {
+            d[i] += fabs(A[i][k]);
+        }
+        d[i] = 1.0 / d[i];
+        for (k = 0; k < n; k++) {
+            A[i][k] *= d[i];
+        }
+        for (k = 0; k < r; k++) {
+            b[k][i] *= d[i];
+        }
     }
 }
 
@@ -83,11 +113,12 @@ main(int argc, const char *argv[])
         -12
     };
     
+    double d[N];
     
     printf("Vorher:\n");
     printmat_ab(N, A, b);
     
-    scale_ab(N, A, b);
+    scale_ab(N, A, b, d);
     
     printf("==============\n");
     

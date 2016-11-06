@@ -43,6 +43,24 @@ backward(const int n, const double U[n][n], const double y[n], double x[n])
     
 };
 
+/**
+ * Rückwärtseinsetzen mit mehreren rechten Seiten
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       U       Obere Dreiecksmatrix
+ * @param[in]       r       Anzahl Rechte Seiten
+ * @param[in]       y       Rechte Seite Vektor
+ * @param[out]      x       Lösungsvektor
+ */
+void
+backward_multi(const int n, const double U[n][n], const int r, const double y[r][n], double x[r][n])
+{
+    int i;
+    
+    for (i = 0; i < r; i++) {
+        backward(n, U, y[i], x[i]);
+    }
+}
 
 #ifdef __BACKWARD_MAIN__
 

@@ -14,13 +14,22 @@ main_single(void)
         {  -2,  -5,   4,   1 }
     };
     
+    /*
     double b[N] = {
           1,
          -8,
         -16,
         -12
     };
+    */
+    double b[N] = {
+          1,
+          2,
+          3,
+          4
+    };
     
+    double d[N];
     double y[N];
     double x[N];
     double L[N][N];
@@ -33,8 +42,15 @@ main_single(void)
     printmat("A", N, A);
     printvec("b", N, b);
     
-    scale_ab(N, A, b);
+    scale_ab(N, A, b, d);
+    printvec("d", N, d);
+    printmat("A_scale", N, A);
+    printvec("b_scale", N, b);
+    
     lu(N, A, L, U, P);
+    printmat("L", N, L);
+    printmat("U", N, U);
+    
     forward(N, P, L, b, y);
     backward(N, U, y, x);
     

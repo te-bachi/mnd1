@@ -117,12 +117,13 @@ main(int argc, const char *argv[])
         0
     };
     
+    double d[N];
     double L[N][N];
     double U[N][N];
     double P[N][N];
     
     printmat("A", N, A);
-    scale_ab(N, A, b);
+    scale_ab(N, A, b, d);
     lu(N, A, L, U, P);
     
     return 0;

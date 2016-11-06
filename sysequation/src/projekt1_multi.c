@@ -44,6 +44,7 @@ main_multi(void)
         }
     };
     
+    double d[N];
     double y[R][N];
     double x[R][N];
     double L[N][N];
@@ -51,18 +52,24 @@ main_multi(void)
     double P[N][N];
     
     printf("========================================\n");
-    printf("Verschiedene Rechte Seiten\n");
+    printf("Mehrere Rechte Seiten\n");
     
     
-    /*
     printmat("A", N, A);
-    printvec("b", N, b);
-    scale_ab(N, A, b);
+    printvec_multi("b", N, R, b);
+    
+    scale_ab_multi(N, A, R, b, d);
+    printvec("d", N, d);
+    printmat("A_scale", N, A);
+    printvec_multi("b_scale", N, R, b);
+    
     lu(N, A, L, U, P);
-    forward_multi(N, P, L, b, y);
-    backward(N, U, y, x);
+    printmat("L", N, L);
+    printmat("U", N, U);
+    
+    forward_multi(N, P, L, R, b, y);
+    backward_multi(N, U, R, y, x);
     
     printmat("P", N, P);
-    printvec("x", N, x);
-    */
+    printvec_multi("x", N, R, x);
 }
