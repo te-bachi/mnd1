@@ -1,6 +1,7 @@
 LIBRARIES_STATIC            = 
-PROGRAMS                    = projekt1 forward backward gauss lu scale \
-                              swap matmath hilbert
+PROGRAMS                    = projekt1 \
+                              forward backward gauss lu scale swap \
+                              matmath hilbert
 
 GLOBAL_CFLAGS               = -DSCALE=1 -DPIVOT=1 \
                               -O0 -pthread -pipe -Wall -ggdb -std=gnu99 \
@@ -17,6 +18,8 @@ projekt1_CFLAGS          =
 projekt1_LDFLAGS         = 
 projekt1_LIBRARIES       = 
 projekt1_SOURCE          = projekt1.c \
+                           projekt1_single.c \
+                           projekt1_multi.c \
                            print.c \
                            scale.c \
                            forward.c \
@@ -62,6 +65,7 @@ lu_SOURCE                = lu.c \
                            forward.c \
                            backward.c \
                            print.c \
+                           matmath.c \
                            swap.c
 
 ### SCALE #####################################################################

@@ -13,11 +13,15 @@
  * @param[out]      y       Lösungsvektor
  */
 void
-forward(const int n, const double L[n][n], const double b[n], double y[n])
+forward(const int n, const double P[n][n], const double L[n][n], double b[n], double y[n])
 {
     int i;
     int j;
     double sum;
+    
+    /* Vertausche Zeilen von Vektor b, da Matrix L
+     * bei der LU-Zerlegung die Zeilen vertauscht hat. */
+    multiply_mat_vec(n, P, b);
     
     /* Setze erste Variable von der ersten Zeile einfach ein */
     y[0] = b[0];
@@ -38,6 +42,25 @@ forward(const int n, const double L[n][n], const double b[n], double y[n])
         
         /* Löse Lösungsvektor y[i] */
         y[i] = (b[i] - sum) / L[i][i];
+    }
+}
+
+/**
+ * Vorwärtseinsetzen mit mehreren rechten Seiten:
+ * berechne die Lösung y von L * y(n) = b(n)
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       L       Untere Dreiecksmatrix
+ * @param[in]       b       Rechte Seite Vektor
+ * @param[out]      y       Lösungsvektor
+ */
+void
+forward_multi(const int n, const double P[n][n], const double L[n][n], const int r, double b[r][n], double y[r][n])
+{
+    int i;
+    
+    for (i = 0; i < r; i++) {
+        forward(n, P, L, b[i], y[i]);
     }
 }
 
@@ -93,7 +116,7 @@ main(int argc, const char *argv[])
     printvec("b", N, b);
     
     multiply_mat_vec(N, P, b);
-    forward(N, A, b, y);
+    forward(N, P, A, b, y);
     
     printvec("y", N, y);
     

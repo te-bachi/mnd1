@@ -41,21 +41,22 @@ scale(const int n, double A[n][n])
  * @param[out]      d       Skalierungs-Vektor
  */
 void
-scale_ab(const int n, double A[n][n], double b[n], double d[n])
+scale_ab(const int n, double A[n][n], double b[n])
 {
-    int i;
-    int k;
+    int     i;
+    int     k;
+    double  d;
     
     for (i = 0; i < n; i++) {
-        d[i] = 0;
+        d = 0;
         for (k = 0; k < n; k++) {
-            d[i] += fabs(A[i][k]);
+            d += fabs(A[i][k]);
         }
-        d[i] = 1.0 / d[i];
+        d = 1.0 / d;
         for (k = 0; k < n; k++) {
-            A[i][k] *= d[i];
+            A[i][k] *= d;
         }
-        b[i] *= d[i];
+        b[i] *= d;
     }
 }
 
@@ -82,15 +83,12 @@ main(int argc, const char *argv[])
         -12
     };
     
-    double d[N];
     
     printf("Vorher:\n");
     printmat_ab(N, A, b);
     
-    scale_ab(N, A, b, d);
+    scale_ab(N, A, b);
     
-    printf("==============\n");
-    printvec("d", N, d);
     printf("==============\n");
     
     printf("Nachher:\n");
