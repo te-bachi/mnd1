@@ -6,9 +6,11 @@
 #include "lu.h"
 #include "matmath.h"
 #include "scale.h"
+#include "inverse.h"
 #include "print.h"
 
 void main_single(void);
 void main_multi(void);
+void main_inv(void);
 
 #endif

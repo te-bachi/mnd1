@@ -26,6 +26,29 @@ eye(const int n, double A[n][n])
     }
 }
 
+
+/**
+ * Transponiert die Matrix
+ *
+ * @param[in]       n       Dimension
+ * @param[in,out]   A       Matrix, die transponiert wird
+ */
+void
+transpose(const int n, double A[n][n])
+{
+    int     i;
+    int     j;
+    double  a;
+    
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < i; j++) {
+            a       = A[i][j];
+            A[i][j] = A[j][i];
+            A[j][i] = a;
+        }
+    }
+}
+
 /**
  * Addiere eine Matrix A mit einer Matrix B.
  * Das Resultat wird in B gespeichert.
