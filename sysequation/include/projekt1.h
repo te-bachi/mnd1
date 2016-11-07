@@ -8,6 +8,8 @@
 #include "scale.h"
 #include "inverse.h"
 #include "print.h"
+#include "hilbert.h"
+#include "error.h"
 
 void main_single(void);
 void main_multi(void);

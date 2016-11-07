@@ -83,7 +83,7 @@ main(int argc, const char *argv[])
 {
     double  A[N][N] = {
         {   2,  -1,  -3,   3 },
-        {   4,   1,  -3,   1 },
+        {   4,   0,  -3,   1 },
         {   6,   1,  -1,   6 },
         {  -2,  -5,   4,   1 }
     };
@@ -110,21 +110,24 @@ main(int argc, const char *argv[])
         {       1,  1 }
     };
     */
-    
+    /*
     double b[N] = {
         0,
         0,
         0
     };
-    
-    double d[N];
+    */
+    //double d[N];
     double L[N][N];
     double U[N][N];
     double P[N][N];
     
     printmat("A", N, A);
-    scale_ab(N, A, b, d);
+    //scale_ab(N, A, b, d);
     lu(N, A, L, U, P);
+    printmat("L", N, L);
+    printmat("U", N, U);
+    printmat("P", N, P);
     
     return 0;
 }

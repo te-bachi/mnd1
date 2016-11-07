@@ -29,7 +29,9 @@ projekt1_SOURCE          = projekt1.c \
                            gauss.c \
                            swap.c \
                            matmath.c \
-                           inverse.c
+                           inverse.c \
+                           hilbert.c \
+                           error.c
 
 ### FORWARD ###################################################################
 
