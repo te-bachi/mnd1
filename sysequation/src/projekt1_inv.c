@@ -2,7 +2,7 @@
 #include "projekt1.h"
 
 #define N   4
-#define N_H 5
+#define N_H 10
 
 void
 main_inv(void)
@@ -18,8 +18,8 @@ main_inv(void)
     double H[N_H][N_H];
     double HI[N_H][N_H];
     double HE[N_H][N_H];
-    
-    printf("========================================\n");
+
+    printf("=== main_inv() ==========================================\n");
     printf("Inverse A\n");
     
     inverse(N, A, I);

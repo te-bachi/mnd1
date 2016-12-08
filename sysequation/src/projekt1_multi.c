@@ -51,7 +51,7 @@ main_multi(void)
     double U[N][N];
     double P[N][N];
     
-    printf("========================================\n");
+    printf("=== main_multi() ========================================\n");
     printf("Mehrere Rechte Seiten\n");
     
     

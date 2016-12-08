@@ -20,6 +20,8 @@ projekt1_LIBRARIES       =
 projekt1_SOURCE          = projekt1.c \
                            projekt1_single.c \
                            projekt1_multi.c \
+                           projekt1_lu.c \
+                           projekt1_hilbert.c \
                            projekt1_inv.c \
                            print.c \
                            scale.c \

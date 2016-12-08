@@ -13,6 +13,8 @@
 
 void main_single(void);
 void main_multi(void);
+void main_lu(void);
+void main_hilbert(void);
 void main_inv(void);
 
 #endif

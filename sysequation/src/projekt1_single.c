@@ -35,15 +35,15 @@ main_single(void)
     double L[N][N];
     double U[N][N];
     double P[N][N];
-    
-    printf("========================================\n");
+
+    printf("=== main_single() =======================================\n");
     printf("Eine Rechte Seite\n");
     
-    printmat("A", N, A);
-    printvec("b", N, b);
+    printmat("Matrix A", N, A);
+    printvec("Loesung b", N, b);
     
     scale_ab(N, A, b, d);
-    printvec("d", N, d);
+    printvec("Skalierung d", N, d);
     printmat("A_scale", N, A);
     printvec("b_scale", N, b);
     
