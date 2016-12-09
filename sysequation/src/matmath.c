@@ -29,6 +29,7 @@ eye(const int n, double A[n][n])
 
 /**
  * Transponiert die Matrix
+ * Das Resultat wird wieder in Matrix A zurückgespeichert!
  *
  * @param[in]       n       Dimension
  * @param[in,out]   A       Matrix, die transponiert wird
@@ -47,6 +48,20 @@ transpose(const int n, double A[n][n])
             A[j][i] = a;
         }
     }
+}
+
+/**
+ * Dupliziere die Matrix A und speichere sie
+ * in Matrix B
+ *
+ * @param[in]       n       Dimension
+ * @param[in]       A       Eingabe Matrix
+ * @param[in,out]   B       Ausgabe Matrix
+ */
+void
+duplicate_mat(const int n, const double A[n][n], double B[n][n])
+{
+    memcpy(B, A, n*n*sizeof(double));
 }
 
 /**
@@ -247,9 +262,8 @@ main_multiply(const int n, double A[n][n], double B[n][n], double v[n])
     multiply_mat_vec(N, Y, x);
     
     printf("------\n");
-    printmat("Y", N, Y);
-    printmat("Z", N, Z);
-    printvec("x", N, x);
+    printmat("Y * Z", N, Z);
+    printvec("Y * x", N, x);
 }
 
 int

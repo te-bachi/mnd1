@@ -38,16 +38,22 @@ lu(const int n, const double A[n][n], double L[n][n], double U[n][n], double P[n
     }
     
 #if PIVOT
+    /* Über alle Spalten */
     for (j = 0; j < n; j++) {
         /* Spaltenmaximum */
         p = j;
+        /* Über alle Zeilen */
         for (i = j + 1; i < n; i++) {
-            if (fabs(A[p][j]) < fabs(A[i][j])) {
+            /*printf("U[%d][%d] = %f < U[%d][%d] = %f == %s\n",
+             *       p, j, U[p][j],
+             *       i, j, U[i][j],
+             *       fabs(U[p][j]) < fabs(U[i][j]) ? "true" : "false"); */
+            if (fabs(U[p][j]) < fabs(U[i][j])) {
                 p = i;
             }
         }
         if (p != j) {
-            swap(n, P, j, p);
+            swap(n, P, j , p);
             swap(n, U, j, p);
         }
     }

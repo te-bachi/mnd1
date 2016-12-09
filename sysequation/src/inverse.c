@@ -5,6 +5,7 @@
 #include "forward.h"
 #include "backward.h"
 #include "scale.h"
+#include "print.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -25,6 +26,10 @@ inverse(const int n, const double A[n][n], double I[n][n])
     
     scale_ab_multi(n, B, n, E, d);
     lu(n, B, L, U, P);
+
+    printmat("L", n, L);
+    printmat("U", n, U);
+    printmat("P", n, P);
     forward_multi(n, P, L, n, E, y);
     backward_multi(n, U, n, y, I);
     transpose(n, I);

@@ -12,9 +12,11 @@
 #include "error.h"
 
 void main_single(void);
+void main_single_scale(void);
 void main_multi(void);
 void main_lu(void);
 void main_hilbert(void);
 void main_inv(void);
+void main_permutation(void);
 
 #endif
