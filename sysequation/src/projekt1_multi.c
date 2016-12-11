@@ -55,21 +55,21 @@ main_multi(void)
     printf("Mehrere Rechte Seiten\n");
     
     
-    printmat("A", N, A);
+    printmat_square("A", N, A);
     printvec_multi("b", N, R, b);
     
     scale_ab_multi(N, A, R, b, d);
     printvec("d", N, d);
-    printmat("A_scale", N, A);
+    printmat_square("A_scale", N, A);
     printvec_multi("b_scale", N, R, b);
     
     lu(N, A, L, U, P);
-    printmat("L", N, L);
-    printmat("U", N, U);
+    printmat_square("L", N, L);
+    printmat_square("U", N, U);
     
     forward_multi(N, P, L, R, b, y);
     backward_multi(N, U, R, y, x);
     
-    printmat("P", N, P);
+    printmat_square("P", N, P);
     printvec_multi("x", N, R, x);
 }

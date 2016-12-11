@@ -22,15 +22,15 @@ inverse(const int n, const double A[n][n], double I[n][n])
     double P[n][n];
     
     memcpy(B, A, n*n*sizeof(double));
-    eye(n, E);
+    eye_square(n, E);
     
     scale_ab_multi(n, B, n, E, d);
     lu(n, B, L, U, P);
 
-    printmat("L", n, L);
-    printmat("U", n, U);
-    printmat("P", n, P);
+    printmat_square("L", n, L);
+    printmat_square("U", n, U);
+    printmat_square("P", n, P);
     forward_multi(n, P, L, n, E, y);
     backward_multi(n, U, n, y, I);
-    transpose(n, I);
+    transpose_square(n, I);
 }

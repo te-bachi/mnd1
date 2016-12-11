@@ -47,7 +47,7 @@ main(int argc, const char *argv[])
         {   6,   7,   8,   9 }
     };
     
-    printmat("A", N, A);
+    printmat_square("A", N, A);
     
     /*
     A = [
@@ -58,7 +58,7 @@ main(int argc, const char *argv[])
     ];
     */
     swap(N, A, 0, 3);
-    printmat("A", N, A);
+    printmat_square("A", N, A);
     
     
     /*
@@ -70,7 +70,7 @@ main(int argc, const char *argv[])
     ];
     */
     swap(N, A, 1, 2);
-    printmat("A", N, A);
+    printmat_square("A", N, A);
     
     return 0;
 }

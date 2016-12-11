@@ -32,13 +32,13 @@ main_single(void)
     printf("=== main_single() =======================================\n");
     printf("Eine Rechte Seite\n");
     
-    printmat("Matrix A", N, A);
+    printmat_square("Matrix A", N, A);
     printvec("Loesung b", N, b);
     
     lu(N, A, L, U, P);
-    printmat("L", N, L);
-    printmat("U", N, U);
-    printmat("P", N, P);
+    printmat_square("L", N, L);
+    printmat_square("U", N, U);
+    printmat_square("P", N, P);
     
     forward(N, P, L, b, y);
     backward(N, U, y, x);
@@ -46,10 +46,10 @@ main_single(void)
     printvec("x", N, x);
     
     inverse(N, P, PI);
-    printmat("PI", N, PI);
+    printmat_square("PI", N, PI);
     duplicate_mat(N, U, RES);
-    multiply_mat_mat(N, L, RES);
-    multiply_mat_mat(N, PI, RES);
-    printmat("inv(P) * L * U", N, RES);
+    multiply_mat_mat_square(N, L, RES);
+    multiply_mat_mat_square(N, PI, RES);
+    printmat_square("inv(P) * L * U", N, RES);
 
 }

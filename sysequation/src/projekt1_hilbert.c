@@ -25,15 +25,15 @@ main_hilbert(void)
     hilbert(N, H);
     scale(N, H, d);
     inverse(N, H, HI);
-    eye(N, HE);
+    eye_square(N, HE);
     for (i = 0; i < N; i++) {
         b[i] = 1.0/(N+i);
     }
-    printmat_ab(N, H, b);
+    printmat_ab_square(N, H, b);
 
     lu(N, H, L, U, P);
-    printmat("L", N, L);
-    printmat("U", N, U);
+    printmat_square("L", N, L);
+    printmat_square("U", N, U);
 
     forward(N, P, L, b, y);
     backward(N, U, y, x);
@@ -41,10 +41,10 @@ main_hilbert(void)
     printvec("x", N, x);
 
 
-    multiply_mat_mat(N, HI, H);
+    multiply_mat_mat_square(N, HI, H);
     subtract_mat_mat(N, HE, H);
 
-    printmat("HI * H - HE", N, H);
+    printmat_square("HI * H - HE", N, H);
     printf("max. error: %g\n", error_max(N, H));
 
 }

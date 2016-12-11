@@ -39,11 +39,11 @@ main_permutation(void)
 
     printf("=== main_permutation() ==================================\n");
 
-    printmat("A", N, A);
+    printmat_square("A", N, A);
 
     lu(N, A, L, U, P);
-    printmat("L", N, L);
-    printmat("U", N, U);
-    printmat("P", N, P);
+    printmat_square("L", N, L);
+    printmat_square("U", N, U);
+    printmat_square("P", N, P);
 
 }

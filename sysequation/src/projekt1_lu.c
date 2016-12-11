@@ -22,11 +22,11 @@ main_lu(void)
     printf("LU-Zerlegung (mit Inverse und Skalierung)\n");
 
     inverse(N, H, HI);
-    printmat("H", N, H);
+    printmat_square("H", N, H);
     scale(N, H, d);
-    printmat("H", N, H);
+    printmat_square("H", N, H);
     lu(N, H, L, U, P);
-    printmat("L", N, L);
-    printmat("U", N, U);
-    printmat("HI", N, HI);
+    printmat_square("L", N, L);
+    printmat_square("U", N, U);
+    printmat_square("HI", N, HI);
 }

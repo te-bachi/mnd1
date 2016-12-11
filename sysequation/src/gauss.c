@@ -72,7 +72,7 @@ main(int argc, const char *argv[])
         0
     };
     
-    printmat_ab(N, A, b);
+    printmat_ab_square(N, A, b);
     gauss(N, A, b);
     backward(N, A, b, x);
     printvec("x", N, x);

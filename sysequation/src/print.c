@@ -10,7 +10,7 @@
  * @param[in]       x       Vektor als zweiter Teil, der ausgegeben wird
  */
 void
-printvec(const char *var, const int n, double x[n])
+printvec(const char *var, const int n, const double x[n])
 {
     int j;
     
@@ -53,13 +53,29 @@ printvec_multi(const char *var, const int n, const int r, double x[r][n])
  * @param[in]       A       Matrix als zweiter Teil, der ausgegeben wird
  */
 void
-printmat(const char *var, const int n, double A[n][n])
+printmat_square(const char *var, const int n, double A[n][n])
 {
     int i;
     int j;
     
     printf("%s = [\n", var);
     for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf(FORMAT "\t", A[i][j]);
+        }
+        printf(";\n");
+    }
+    printf("];\n");
+}
+
+void
+printmat(const char *var, const int m, const int n, double A[m][n])
+{
+    int i;
+    int j;
+
+    printf("%s = [\n", var);
+    for (i = 0; i < m; i++) {
         for (j = 0; j < n; j++) {
             printf(FORMAT "\t", A[i][j]);
         }
@@ -76,7 +92,7 @@ printmat(const char *var, const int n, double A[n][n])
  * @param[in]       b       Vektor
  */
 void
-printmat_ab(const int n, double A[n][n], double b[n])
+printmat_ab_square(const int n, double A[n][n], double b[n])
 {
     int i;
     int j;

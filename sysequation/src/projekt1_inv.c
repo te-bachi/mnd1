@@ -24,21 +24,21 @@ main_inv(void)
     
     inverse(N, A, I);
 
-    printmat("A", N, A);
-    printmat("I", N, I);
+    printmat_square("A", N, A);
+    printmat_square("I", N, I);
 
     printf("\nHilbert 5x5\n");;
 
     hilbert(N_H, H);
     inverse(N_H, H, HI);
-    eye(N_H, HE);
+    eye_square(N_H, HE);
 
-    printmat("H", N_H, H);
-    printmat("HI", N_H, HI);
+    printmat_square("H", N_H, H);
+    printmat_square("HI", N_H, HI);
 
-    multiply_mat_mat(N_H, HI, H);
+    multiply_mat_mat_square(N_H, HI, H);
     subtract_mat_mat(N_H, HE, H);
-    printmat("HI * H - HE", N_H, H);
+    printmat_square("HI * H - HE", N_H, H);
     printf("max. error: %g\n", error_max(N_H, H));
 
 }

@@ -22,7 +22,7 @@ forward(const int n, const double P[n][n], const double L[n][n], double b[n], do
     
     /* Vertausche Zeilen von Vektor b, da Matrix L
      * bei der LU-Zerlegung die Zeilen vertauscht hat. */
-    multiply_mat_vec(n, P, b);
+    multiply_mat_vec_square(n, P, b);
     
     /* Setze erste Variable von der ersten Zeile einfach ein */
     y[0] = b[0];
@@ -114,10 +114,10 @@ main(int argc, const char *argv[])
     
     double y[N];
     
-    printmat("A", N, A);
+    printmat_square("A", N, A);
     printvec("b", N, b);
     
-    multiply_mat_vec(N, P, b);
+    multiply_mat_vec_square(N, P, b);
     forward(N, P, A, b, y);
     
     printvec("y", N, y);

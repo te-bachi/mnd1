@@ -75,7 +75,7 @@ int main(int argc, const char * argv[]) {
     double b[N] = { 0, 1, 4 };
     double x[N];
     
-    printmat("A", N, A);
+    printmat_square("A", N, A);
     printvec("b", N, b);
     backward(N, A, b, x);
     printvec("x", N, x);

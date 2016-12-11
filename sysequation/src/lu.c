@@ -128,12 +128,12 @@ main(int argc, const char *argv[])
     double U[N][N];
     double P[N][N];
     
-    printmat("A", N, A);
+    printmat_square("A", N, A);
     //scale_ab(N, A, b, d);
     lu(N, A, L, U, P);
-    printmat("L", N, L);
-    printmat("U", N, U);
-    printmat("P", N, P);
+    printmat_square("L", N, L);
+    printmat_square("U", N, U);
+    printmat_square("P", N, P);
     
     return 0;
 }
