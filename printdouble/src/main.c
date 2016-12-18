@@ -4,6 +4,9 @@
 #include <string.h>
 #include <math.h>
 
+
+#define FORMAT  "%12.8f"
+
 typedef enum {
     FORMAT_BINARY      = 2,
     FORMAT_DECIMAL     = 10,
@@ -25,10 +28,14 @@ void        sqrt_print(double x, double y);
 double      calc_relative_rounding_error(double input);
 void        calc_exponential_effacement(void);
 void        calc_exponential_non_effacement(void);
+void        sum_up(int n);
 
 /**
  * Create a double with input values "sign", "exponent" and "mantisse".
- 
+ *
+ *   un.a = create_double(0, -1022, 1);
+ *   printdouble('e', un.a);
+ *
  * @param   sign        0 = positive, 1 = negative
  * @param   exponent    exponent from -1022 to +1023
  * @param   mantisse    numerical value
@@ -39,21 +46,24 @@ create_double(uint8_t sign, int16_t exponent, uint64_t mantisse)
 {
     un_t un;
     
-    exponent += 1023;
-    
-    un.b = ((((uint64_t) sign)     << 63) & 0x8000000000000000);
-    un.b = ((((uint64_t) exponent) << 52) & 0x7ff0000000000000) | un.b;
-    un.b = ((((uint64_t) mantisse) >>  1) & 0x000fffffffffffff) | un.b;
-    
+//    exponent += 1023;
+//
+//    un.b = ((((uint64_t) sign)     << 63) & 0x8000000000000000);
+//    un.b = ((((uint64_t) exponent) << 52) & 0x7ff0000000000000) | un.b;
+//    un.b = ((((uint64_t) mantisse) >>  1) & 0x000fffffffffffff) | un.b;
+
     return un.a;
+    
+    
 }
 
 /**
- * Parse a character string writes it into an unsigned integer (64-bit).
- 
+ * Parse a character string and writes it into an unsigned integer (64-bit).
+ *
  * @param   str         character string
- * @param   format      what type of input string is it: FORMAT_BINARY, FORMAT_DECIMAL or FORMAT_HEXADECIMAL
- * @return  returns the newly created unsigned integer (64-bit)
+ * @param   format      what type of input string is it: FORMAT_BINARY, FORMAT_DECIMAL or
+ *                      FORMAT_HEXADECIMAL
+ * @return              returns the newly created unsigned integer (64-bit)
  */
 uint64_t
 parse(const char *str, format_t format)
@@ -102,8 +112,9 @@ parse(const char *str, format_t format)
 }
 
 /**
- * Print double precision value
+ * Print double precision value in 'format' and binary value
  *
+ * @param   format      which format, ex. 'e' for scientific notation
  * @param   d           double value to print
  */
 void
@@ -193,6 +204,12 @@ sqrt_print(double x, double y)
     printf("\n");
 }
 
+/**
+ * Calculate relative rounding error for the input
+ *
+ * @param   input       Input
+ * @return              Relative EPS
+ */
 double
 calc_relative_rounding_error(double input)
 {
@@ -215,30 +232,29 @@ calc_exponential_effacement(void)
     
     printf("%-3s\t%-32s\t%-32s\t%-25s\n" ,"x" , "y", "exp(x)", "y / exp(x) - 1");
     
-    //for (x = 24.0; x >= -25.0; x--) {
-    x = -25.0;
+    for (x = 24.0; x >= -25.0; x--) {
     
         y = 1.0;
         t = 1.0;
         k = 1.0;
         
-        printf("\t%-32s\t%-32s\t%-32s\n" ,"t" , "y", "k");
-        printf("\t%32.19f\t%32.19f\t%32.19f\n" ,t, y, k);
+        //printf("\t%-32s\t%-32s\t%-32s\n" ,"t" , "y", "k");
+        //printf("\t%32.19f\t%32.19f\t%32.19f\n" ,t, y, k);
         
         while (y != (y + ((t * x) / k))) {
             t /= k;
             t *= x;
             y += t;
-            printf("\t%37.24f\t%32.19f\t%32.19f\n" ,t, y, k);
+            //printf("\t%37.24f\t%32.19f\t%32.19f\n" ,t, y, k);
             k += 1;
         }
-        printf("%-3s\t%-32s\t%-32s\t%-25s\n" ,"x" , "y", "exp(x)", "y / exp(x) - 1");
+        //printf("%-3s\t%-32s\t%-32s\t%-25s\n" ,"x" , "y", "exp(x)", "y / exp(x) - 1");
         printf("%3.0f\t%32.19f\t%32.19f\t%25.19f\n" ,x , y, exp(x), y / exp(x) - 1.0);
-        printf("=================================\n");
-    //}
+        //printf("=================================\n");
+    }
     
-    double k_fak = 1.0;
-    double x_exp = 1.0;
+    //double k_fak = 1.0;
+    //double x_exp = 1.0;
     
     /*
     y = 1.0;
@@ -264,13 +280,26 @@ calc_exponential_effacement(void)
     
     printf("%3.0f\t%32.19f\t%32.19f\t%25.19f\n" ,x , y, exp(x), y / exp(x) - 1.0);
     */
-    return 0.0;
+    //return 0.0;
 }
 
 void
 calc_exponential_non_effacement(void)
 {
     
+}
+
+void
+sum_up(int n)
+{
+    double  sum = 0.0;
+    int     i;
+
+    for (i = 1; i <= n; i++) {
+        sum += (1.0 / pow(i, 2));
+    }
+    printf("s(%d)\n", n);
+    printdouble('f', sum);
 }
 
 /**
@@ -308,27 +337,41 @@ main(int argc, char *argv[])
     
     printf("\n\n*******************\n");
     printf("Aufgabe 1.5\n\n");
+
+    printf("Relative Rounding Error:\n");
+    printf("eps(1000.0)\n");
+    printdouble('e', calc_relative_rounding_error(1000.0));
+    printf("eps(1.0)\n");
+    printdouble('e', calc_relative_rounding_error(1.0));
+    printf("eps(0.001)\n");
+    printdouble('e', calc_relative_rounding_error(0.001));
+    printf("\n");
     
-    //print_epsilon(1.0);
-    //print_epsilon(0.1);
-    //print_epsilon(0.001);
-    printdouble('f', calc_relative_rounding_error(1000.0));
-    printdouble('f', calc_relative_rounding_error(1.0));
-    printdouble('f', calc_relative_rounding_error(0.001));
-    
+    double eps = calc_relative_rounding_error(1.0);
+
     /*   0.1000 = 0 0111111 10111001 10011001 10011001 10011001 10011001 10011001 10011010 */
-    
+    printf("Print x=0.1:\n");
     printf("0.1\n");
     un.a = 0.1;
     printdouble('f', un.a);
     printf("\n");
-    
+
+    /** EPSILON **/
     printf("0.1 + epsilon\n");
+    printdouble('f', un.a + eps);
+    printf("\n");
+
+    printf("0.1 - epsilon\n");
+    printdouble('f', un.a - eps);
+    printf("\n");
+    
+    /** LSB **/
+    printf("0.1 + LSB\n");
     un.b = parse("0011111110111001100110011001100110011001100110011001100110011011", FORMAT_BINARY);
     printdouble('f', un.a);
     printf("\n");
     
-    printf("0.1 - epsilon\n");
+    printf("0.1 - LSB\n");
     un.b = parse("0011111110111001100110011001100110011001100110011001100110011001", FORMAT_BINARY);
     printdouble('f', un.a);
     printf("\n");
@@ -337,105 +380,76 @@ main(int argc, char *argv[])
     printf("Aufgabe 1.6\n\n");
     sqrt_print(1234567891.0, 1234567890.0);
     
-    printf("\n\n*******************\n\n");
-    
-    /*
-    un.b = parse("0011111110111001100110011001100110011001100110011001100110011010", FORMAT_BINARY);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, -1022, 1);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 1023, 1);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 0, 1);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 1, 1);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 2, 1);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, -1, 1);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 1, 2);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 0, 4);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 0, 6);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 1, 6);
-    printdouble('e', un.a);
-    
-    un.a = create_double(0, 1, 6);
-    printdouble('e', un.a);
-    */
     
     
-    un.a = create_double(0, 0, 1);
-    printdouble('e', un.a);
-    un.a = create_double(0, 0, 2);
-    printdouble('e', un.a);
-    un.a = create_double(0, 0, 4);
-    printdouble('e', un.a);
-    un.a = create_double(0, 0, 8);
     
-    un.a = create_double(0, 1, 1);
-    printdouble('e', un.a);
-    un.a = create_double(0, 1, 2);
-    printdouble('e', un.a);
-    un.a = create_double(0, 1, 4);
-    printdouble('e', un.a);
-    un.a = create_double(0, 1, 8);
-    printdouble('e', un.a);
-    
-    un.b = parse("0000000000000110011001100110011001100110011001100110", FORMAT_BINARY);
-    printf("mantisse = %" PRIu64 "\n", un.b);
-    
-    
-    un.a = 18.4;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 18.2;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 18.0;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 20.12345;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 19.12345;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 18.12345;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 7.12345;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 4.50;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
-    un.a = 4.55;
-    printf("test\n", un.a);
-    printdouble('e', un.a);
-    
+//    un.a = create_double(0, 0, 1);
+//    printdouble('e', un.a);
+//    un.a = create_double(0, 0, 2);
+//    printdouble('e', un.a);
+//    un.a = create_double(0, 0, 4);
+//    printdouble('e', un.a);
+//    un.a = create_double(0, 0, 8);
+//
+//    un.a = create_double(0, 1, 1);
+//    printdouble('e', un.a);
+//    un.a = create_double(0, 1, 2);
+//    printdouble('e', un.a);
+//    un.a = create_double(0, 1, 4);
+//    printdouble('e', un.a);
+//    un.a = create_double(0, 1, 8);
+//    printdouble('e', un.a);
+//
+//    un.b = parse("0000000000000110011001100110011001100110011001100110", FORMAT_BINARY);
+//    printf("mantisse = %" PRIu64 "\n", un.b);
+//
+//
+//    un.a = 18.4;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 18.2;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 18.0;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 20.12345;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 19.12345;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 18.12345;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 7.12345;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 4.50;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+//
+//    un.a = 4.55;
+//    printf("test " FORMAT "\n", un.a);
+//    printdouble('e', un.a);
+
+    printf("\n\n*******************\n");
+    printf("Aufgabe 1.7\n\n");
     calc_exponential_effacement();
-    
+
+    printf("\n\n*******************\n");
+    printf("Aufgabe 1.8\n\n");
+    sum_up(2);
+    sum_up(4);
+    sum_up(300);
+
+    printf("\n\n*******************\n\n");
     return 0;
 }
