@@ -3,6 +3,8 @@
 #include <math.h>
 #include <stdbool.h>
 
+#include "print.h"
+
 #define M 16
 #define N 4
 
@@ -64,6 +66,7 @@ F(double param[N], double data[M][2], double vecF[M])
 {
     int     i;
     for (i = 0; i < M; i++) {
+        //printf("data[%02d][0] = %6.2f, data[%02d][1] = %6.2f\n", i, data[i][0], i, data[i][1]);
         vecF[i] = f(data[i][0], param) - data[i][1];
     }
 }
@@ -168,17 +171,17 @@ calcSystem(double a[M+N][N], double b[M+N], double jacF[M][N], double vecF[M], d
     for (i = 0; i < (M + N); i++) {
         for (j = 0; j < N; j++) {
             if (i < M) {
-                //a[i][j] = << snipp >>
+                a[i][j] = jacF[i][j];
             } else {
                 if( j == (i - M)) {
-                    //a[i][j] = << snipp >>
+                    a[i][j] = mu;
                 } else {
                     a[i][j] = 0.0;
                 };
             }
         }
         if (i < M) {
-            //b[i] = << snipp >>
+            b[i] = -vecF[i];
         } else {
             b[i] = 0.0;
         }
@@ -190,16 +193,21 @@ calcSystem(double a[M+N][N], double b[M+N], double jacF[M][N], double vecF[M], d
 double
 calcMaxNormGradPhi(double jacF[M][N], double vecF[M])
 {
-    double max = 0.0;
+    double  max = 0.0;
+    double  sum = 0.0;
+    int     i;
+    int     j;
+
     // grad Phi = jacF(x)^T * F(x)
-    for(int i=0;i<N;i++){
-        double sum=0.;
-        for(int j=0;j<M;j++){
-            //sum += << snipp >>
+    for (i = 0; i < N; i++) {
+        sum = 0.0;
+
+        for (j = 0; j < M; j++) {
+            sum += jacF[j][i] * vecF[j];
         }
-        if(i==0){
-            max=fabs(sum);
-        }else if(max < fabs(sum)){
+        if (i == 0) {
+            max = fabs(sum);
+        } else if (max < fabs(sum)) {
             max = fabs(sum);
         }
     }
@@ -249,29 +257,41 @@ main(int argc, const char * argv[])
     double  muMax   = 1e8;      // maximales mu
     double  beta0   = 0.2;      // untere Grenze fuer rho
     double  beta1   = 0.8;      // obere Grenze fuer rho
-    double  mu      = 1;        // mu mit Startwert 1
+    double  mu      = 1.0;      // mu mit Startwert 1
     int     iter    = 0;
     int     maxIter = 50;       // maximal 50 Iterationen
     double  rho     = 0;
 
     // initiale Berechnung der Differenzen
     F(x, data, vecF);
-    double normF =norm(vecF,M);
+    //printvec("vecF", M, vecF);
+
+    double normF = norm(vecF,M);
+
     // initiale Berechnung der Jacobimatrix der Differenzen
     dF(x, data, jacF);
+    //printmat("jacF", M, N, jacF);
+
     // Levenberg-Marquardt Verfahren
     while(ok && (iter++ < maxIter)){
         printf("Iteration : %d\n",iter);
+        /*** DEBUG ***/
         do {
             // Matrix / Rechteseite fuer Normalengleichung berechnen
-            //<< snipp >>
+            calcSystem(a, b, jacF, vecF,  mu);
+            //printmat("a", M+N, N, a);
+            //printvec("b", M+N, b);
+            //printmat("jacF", M, N, jacF);
+
             // QR-Zerlegung
-            //<< snipp >>
+            qrdecompose(a, b, d, QTb);
+
             // Loesen des Systems durch Rueckwartseinsetzen
-            //<< snipp >>
+            backward(a, d, QTb, sk);
+
             // neuer Parametersatz berechnen
             for(i = 0; i < N; i++) {
-                xn[i] = x[i]+sk[i];
+                xn[i] = x[i] + sk[i];
             }
             // rho fuer die Bewertung von mu berechnen (vgl. Skript)
             double vecFn[M];
@@ -288,15 +308,18 @@ main(int argc, const char * argv[])
             rho = (normF-normxn)/(normF-normFns);
 
             printf("rho = %g\tmu = %g\n",rho,mu);
+
             // Falls rho > beta1, Loesung behalten und mu verkleinern
-            //if(<< snipp >> && mu > muMin){
-            //    << snipp >>
-            //}else{
+            if (rho > beta1 && mu > muMin) {
+                mu = mu / 2.0;
+
             // Falls rho < beta0, neue Schritt mit groesserem rho wiederholen
-            //}if(<< snipp >> && mu < muMax){
-            //    << snipp >>
-            //}
-        } while (/* < snipp >>  && */ mu > muMin);
+            } else if(rho < beta0 && mu < muMax) {
+                mu = mu * 2.0;
+            }
+
+        /*** DEBUG ***/
+        } while (rho < beta0  && mu > muMin);
 
         for (int i = 0; i < N; i++){
             x[i] = xn[i];
@@ -314,6 +337,8 @@ main(int argc, const char * argv[])
         if(maxgradphi < tol) {
             ok = false;
         }
+        /*** DEBUG ***/
+        //ok = false;
 
         printf("normF = %g\tmaxgradphi = %g\n\n",normF,maxgradphi);
     }

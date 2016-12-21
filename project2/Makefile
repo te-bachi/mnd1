@@ -14,7 +14,8 @@ GLOBAL_LDFLAGS              = -lm
 project2_CFLAGS          = 
 project2_LDFLAGS         = 
 project2_LIBRARIES       = 
-project2_SOURCE          = project2.c
+project2_SOURCE          = project2.c \
+                           print.c
 
 
 include autogen.mk
